@@ -4,7 +4,7 @@ spring:
   profiles:    active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://127.0.0.1:3306/jiniworld?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC"
+    url: "jdbc:mysql://127.0.0.1:3306/jiniworld_test?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Seoul"
     username: test
     password: test   
     hikari:
@@ -20,11 +20,15 @@ spring:
       hibernate:
         format_sql: true
     generate-ddl: false
-    open-in-view: true
+    open-in-view: false
   jackson:
     serialization:
       fail-on-empty-beans: false
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Seoul
+  data:
+    rest:      base-path: /api
 server:
   port: 8989
+  servlet:
+    context-path: /
