@@ -27,7 +27,10 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Seoul
   data:
-    rest:      base-path: /api
+    rest:      default-page-size: 5
+      max-page-size: 20
+      detection-strategy: annotated # default
+      base-path: /api
 server:
   port: 8989
   servlet:
