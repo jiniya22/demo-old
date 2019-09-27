@@ -31,6 +31,9 @@ spring:
       max-page-size: 20
       detection-strategy: annotated # default
       base-path: /api
+  security:
+    user:      name: jini
+      password: jini
 server:
   port: 8989
   servlet:

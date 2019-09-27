@@ -18,14 +18,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/api/**").permitAll()
+			.antMatchers("/**").permitAll()
+			.antMatchers("/api/**").authenticated()
 			.antMatchers("/v", "/v/**").authenticated()
 		.and()
 			.formLogin().permitAll()
 			.usernameParameter("email").passwordParameter("password")
 		.and()
 			.logout().logoutUrl("/logout")
-			.deleteCookies("JSESSIONID");
+			.deleteCookies("JSESSIONID")
+		.and().csrf().disable();
 			
 	}
 }
