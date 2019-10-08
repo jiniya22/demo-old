@@ -1,4 +1,4 @@
-package me.jiniworld.demo.configurations;
+package me.jiniworld.demo.commons;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
