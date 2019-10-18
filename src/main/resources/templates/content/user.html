@@ -42,16 +42,38 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	<section>
 		<div class="container">
 			<div class="d-title">
-				<h2>thymeleaf tutorial 과정</h2>
+				<h2>user 조회</h2>
 			</div>
 			<div class="d-content">
 				<div class="row">
-					<ul>
-						<li>thymeleaf 관련 configuration 설정하기</li>
-						<li>thymeleaf로 웹 페이지 구성하기</li>
-						<li>JSP vs thymeleaf 비교하기</li>
-						<li>thymeleaf layout 구성하기</li>
-					</ul>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr class="headings">
+									<th class="column-title text-center" width="10%">아이디</th>
+									<th class="column-title text-center" width="6%">유형</th>
+									<th class="column-title text-center" width="10%">이름</th>
+									<th class="column-title text-center" width="15%">전화번호</th>
+									<th class="column-title text-center" width="10%">생일</th>
+									<th class="column-title text-center" width="7%">성별</th>
+									<th class="column-title text-center" width="25%">가입일시</th>
+									<th class="column-title text-center" width="7%">탈퇴여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="user: ${users}" th:attr=data-href=@{/v/users/__${user.id}__}>
+									<td class="column-title text-center" th:text="${ user.id }"></td>
+									<td class="column-title text-center" th:text="${ user.type eq '1' ? '사업자' : '일반' }"></td>
+									<td class="column-title text-center" th:text="${ user.name }"></td>
+									<td class="column-title text-center" th:text="${ user.phoneNumber }"></td>
+									<td class="column-title text-center" th:text="${ user.birthDate }"></td>
+									<td class="column-title text-center" th:text="${ user.sex eq '1' ? '남자' : '여자' }"></td>
+									<td class="column-title text-center" th:text="${ user.createTimestamp }"></td>
+									<td class="column-title text-center" th:text="${ user.del ? 'Y' : 'N' }"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>	

@@ -1,9 +1,11 @@
 package me.jiniworld.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,5 +63,9 @@ public class UserService {
 	public void delete(User user) {
 //		user.setDel(true);
 		userRepository.delete(user);
+	}
+
+	public List<User> findAll(Pageable pageable) {
+		return userRepository.findAllByDelOrderByIdDesc(false, pageable);
 	}
 }

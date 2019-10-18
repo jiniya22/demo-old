@@ -35,6 +35,20 @@ spring:
       password: admin
       roles:      - ADMIN
       - VIEW
+  mvc:
+    static-path-pattern: /static/**
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+  resources:
+    static-locations:
+    - classpath:/static/
+    cache:
+      period: 0
 server:
   port: 8989
   servlet:
