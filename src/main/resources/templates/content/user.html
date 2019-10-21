@@ -29,13 +29,13 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	</header>
 	<nav class="navbar navbar-expand-lg navbar-light" id="nav_area">
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#collapsibleNavbar" style="margin: 3px;">
+			data-target="#nav_menu_area" style="margin: 3px;">
 			<span class="navbar-toggler-icon" style="width: 1em; height: auto;"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav" id="n_menu" style="margin: 0 auto; width: 1140px;">
-				<li class='nav-item'  th:classappend="*{currentPage eq 'home'} ? 'active' : ''" th:attr="data-href=@{/v}">홈</li>
-				<li sec:authorize="hasRole('ROLE_ADMIN')" class='nav-item' th:classappend="*{currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
+		<div class="collapse navbar-collapse" id="nav_menu_area">
+			<ul class="navbar-nav" id="nav_menu" style="margin: 0 auto; width: 1140px;">
+				<li class='nav-item'  th:classappend="${currentPage eq 'home'} ? 'active' : ''" th:attr="data-href=@{/v}">홈</li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class='nav-item' th:classappend="${currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
 			</ul>
 		</div>
 	</nav>
@@ -61,15 +61,15 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="user: ${users}" th:attr=data-href=@{/v/users/__${user.id}__}>
-									<td class="column-title text-center" th:text="${ user.id }"></td>
-									<td class="column-title text-center" th:text="${ user.type eq '1' ? '사업자' : '일반' }"></td>
-									<td class="column-title text-center" th:text="${ user.name }"></td>
-									<td class="column-title text-center" th:text="${ user.phoneNumber }"></td>
-									<td class="column-title text-center" th:text="${ user.birthDate }"></td>
-									<td class="column-title text-center" th:text="${ user.sex eq '1' ? '남자' : '여자' }"></td>
-									<td class="column-title text-center" th:text="${ user.createTimestamp }"></td>
-									<td class="column-title text-center" th:text="${ user.del ? 'Y' : 'N' }"></td>
+								<tr th:object=${user} th:each="user: ${users}" th:attr=data-href=@{/v/users/__${user.id}__}>
+									<td class="column-title text-center" th:text="*{ id }"></td>
+									<td class="column-title text-center" th:text="*{ type eq '0' ? '일반' : eq '1' ? '사업자' : '미설정' }"></td>
+									<td class="column-title text-center" th:text="*{ name }"></td>
+									<td class="column-title text-center" th:text="*{ phoneNumber }"></td>
+									<td class="column-title text-center" th:text="*{ birthDate }"></td>
+									<td class="column-title text-center" th:text="*{ sex eq '1' ? '남자' : sex eq '2' ? '여자' : '미설정' }"></td>
+									<td class="column-title text-center" th:text="*{ createTimestamp }"></td>
+									<td class="column-title text-center" th:text="*{ del ? 'Y' : 'N' }"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -87,8 +87,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script>
-		$("#collapsibleNavbar #n_menu li").on("click", function() {
-			$("#collapsibleNavbar #n_menu li").removeClass("active");
+		$("#nav_menu_area #nav_menu li").on("click", function() {
+			$("#nav_menu_area #nav_menu li").removeClass("active");
 			$(this).addClass("active");
 			location.href = $(this).data('href');
 		});

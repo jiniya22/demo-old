@@ -15,9 +15,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 </head>
 <body>
 	<header>
-		<h1>
-			<a th:href="@{/v}"><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo page" id="btn_home" /></a>
-		</h1>
+		<a th:href="@{/v}"><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo page" id="btn_home" /></a>
 		<ul>
 			<li sec:authorize="isAuthenticated()">
 				<span sec:authentication="principal.username"></span> 님 반가워요!
@@ -28,14 +26,13 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 		</ul>
 	</header>
 	<nav class="navbar navbar-expand-lg navbar-light" id="nav_area">
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#collapsibleNavbar" style="margin: 3px;">
-			<span class="navbar-toggler-icon" style="width: 1em; height: auto;"></span>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav_menu_area">
+			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav" id="n_menu" style="margin: 0 auto; width: 1140px;">
-				<li class='nav-item'  th:classappend="*{currentPage eq 'home'} ? 'active' : ''" th:attr="data-href=@{/v}">홈</li>
-				<li sec:authorize="hasRole('ROLE_ADMIN')" class='nav-item' th:classappend="*{currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
+		<div class="collapse navbar-collapse" id="nav_menu_area">
+			<ul class="navbar-nav" id="nav_menu">
+				<li class='nav-item'  th:classappend="${currentPage eq 'home'} ? 'active' : ''" th:attr="data-href=@{/v}">홈</li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class='nav-item' th:classappend="${currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
 			</ul>
 		</div>
 	</nav>
@@ -65,8 +62,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script>
-		$("#collapsibleNavbar #n_menu li").on("click", function() {
-			$("#collapsibleNavbar #n_menu li").removeClass("active");
+		$("#nav_menu_area #nav_menu li").on("click", function() {
+			$("#nav_menu_area #nav_menu li").removeClass("active");
 			$(this).addClass("active");
 			location.href = $(this).data('href');
 		});

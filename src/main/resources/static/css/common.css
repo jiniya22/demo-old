@@ -1,60 +1,103 @@
 @charset "UTF-8";
 
 body {
-	color: #777777;	font-size: 0.85rem; margin: 0 auto;
-	font-family: 'Noto Sans KR', "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-}
-a {
-	color: #777777; text-decoration: none;
-}
-header {
-	padding: 20px 10px; text-align: center;
-}
-header ul {
-	list-style: none;
-}
-header ul li {
-	display: inline-block;
-}
-.d-title {
-    padding: 1px 5px 6px;
-    margin-bottom: 10px;
-}
-.d-title h2 {
-	font-size: 22px;
+	color: #777777;
+	font-size: 0.85rem;
+	margin: 0 auto;
+	font-family: 'Noto Sans KR', "Helvetica Neue", Roboto, Arial,
+		"Droid Sans", sans-serif;
 }
 
-#nav_area {
+a {
+	color: #777777;
+	text-decoration: none;
+}
+
+header {
+	padding: 20px 10px;
+	text-align: center;
+	max-height: 90px;
+}
+
+header ul {
+	list-style: none;
+	font-size: 0.8rem;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+header ul li {
+	display: inline-block;
+	padding-right: 5px;
+}
+
+nav#nav_area {
 	background-color: white;
 	border-bottom: 1px solid #dadada;
 	padding: 0rem 1rem;
 }
-.navbar-nav li {
+
+nav#nav_area > button {
+	margin: 3px;
+}
+
+nav#nav_area > button span {
+	width: 1em; height: auto;	
+}
+
+nav .navbar-nav li {
 	padding: 1rem 1.02rem;
-    box-sizing:border-box;
-	-moz-box-sizing:border-box;
-	-webkit-box-sizing:border-box;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	border-bottom: 3px solid transparent;
 	font-weight: 500;
-/* 	text-shadow: 2px 2px 4px #000000; */
 }
-#n_menu li.nav-item.active {
+
+nav #nav_menu {
+	margin: 0 auto; width: 1140px;
+}
+
+nav #nav_menu li.nav-item.active {
 	color: #24a9f6;
 	border-bottom: 3px solid #24a9f6;
 }
-#n_menu li.nav-item:hover {
+
+nav #nav_menu li.nav-item:hover {
 	color: #24a9f6;
 	border-bottom: 3px solid #dadada;
 }
 
 section {
-	background-color: #f2f4f7; padding: 20px;	
-	border-top: 1px solid #ebedef; border-bottom: 1px solid #ebedef;
+	background-color: #f2f4f7;
+	padding: 20px;
+	border-top: 1px solid #ebedef;
+	border-bottom: 1px solid #ebedef;
 }
+
 section .container {
-	width: 100%; min-height: 580px; margin: 0 auto; padding: 30px 45px;
-  border: 1px solid #ebedef; background-color: #ffffff;
+	width: 100%;
+	min-height: 580px;
+	margin: 0 auto;
+	padding: 30px 45px;
+	border: 1px solid #ebedef;
+	background-color: #ffffff;
 }
+
+section .container .d-title {
+	padding: 1px 5px 6px;
+	margin-bottom: 10px;
+}
+
+section .container .d-title h2 {
+	font-size: 22px;
+}
+
 footer {
-	margin-bottom: 0; background-color: white; padding: 2rem 1rem; border-top: 1px solid #dadada; text-align: center;
+	margin-bottom: 0;
+	background-color: white;
+	padding: 2rem 1rem;
+	border-top: 1px solid #dadada;
+	text-align: center;
 }
