@@ -1,97 +1,45 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-	<meta name="description" content="Welcome to jiniworld!">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>user 조회</title>
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="cmm/layout">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&amp;subset=korean" rel="stylesheet">
-<link rel="stylesheet" type="text/css" th:href="@{/static/css/common.css}"/>
-</head>
-<body>
-	<header>
-		<h1>
-			<a th:href="@{/v}"><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo page" id="btn_home" /></a>
-		</h1>
-		<ul>
-			<li sec:authorize="isAuthenticated()">
-				<span sec:authentication="principal.username"></span> 님 반가워요!
-			</li>
-			<li><form id="logoutFrm" th:action="@{/logout}" method="post" style="display: inline-block;">
-					<a href="#" onclick="document.getElementById('logoutFrm').submit()" data-toggle="tooltip" data-placement="logout" title="Logout"><i class="fa fa-power-off"></i></a>
-				</form></li>
-		</ul>
-	</header>
-	<nav class="navbar navbar-expand-lg navbar-light" id="nav_area">
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#nav_menu_area" style="margin: 3px;">
-			<span class="navbar-toggler-icon" style="width: 1em; height: auto;"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="nav_menu_area">
-			<ul class="navbar-nav" id="nav_menu" style="margin: 0 auto; width: 1140px;">
-				<li class='nav-item'  th:classappend="${currentPage eq 'home'} ? 'active' : ''" th:attr="data-href=@{/v}">홈</li>
-				<li sec:authorize="hasRole('ROLE_ADMIN')" class='nav-item' th:classappend="${currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
-			</ul>
+<section layout:fragment="f-content">
+	<div class="container">
+		<div class="d-title">
+			<h2>user 조회</h2>
 		</div>
-	</nav>
-	<section>
-		<div class="container">
-			<div class="d-title">
-				<h2>user 조회</h2>
-			</div>
-			<div class="d-content">
-				<div class="row">
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr class="headings">
-									<th class="column-title text-center" width="10%">아이디</th>
-									<th class="column-title text-center" width="6%">유형</th>
-									<th class="column-title text-center" width="10%">이름</th>
-									<th class="column-title text-center" width="15%">전화번호</th>
-									<th class="column-title text-center" width="10%">생일</th>
-									<th class="column-title text-center" width="7%">성별</th>
-									<th class="column-title text-center" width="25%">가입일시</th>
-									<th class="column-title text-center" width="7%">탈퇴여부</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:object=${user} th:each="user: ${users}" th:attr=data-href=@{/v/users/__${user.id}__}>
-									<td class="column-title text-center" th:text="*{ id }"></td>
-									<td class="column-title text-center" th:text="*{ type eq '0' ? '일반' : eq '1' ? '사업자' : '미설정' }"></td>
-									<td class="column-title text-center" th:text="*{ name }"></td>
-									<td class="column-title text-center" th:text="*{ phoneNumber }"></td>
-									<td class="column-title text-center" th:text="*{ birthDate }"></td>
-									<td class="column-title text-center" th:text="*{ sex eq '1' ? '남자' : sex eq '2' ? '여자' : '미설정' }"></td>
-									<td class="column-title text-center" th:text="*{ createTimestamp }"></td>
-									<td class="column-title text-center" th:text="*{ del ? 'Y' : 'N' }"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+		<div class="d-content">
+			<div class="row">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr class="headings">
+								<th class="column-title text-center" width="10%">아이디</th>
+								<th class="column-title text-center" width="6%">유형</th>
+								<th class="column-title text-center" width="10%">이름</th>
+								<th class="column-title text-center" width="15%">전화번호</th>
+								<th class="column-title text-center" width="10%">생일</th>
+								<th class="column-title text-center" width="7%">성별</th>
+								<th class="column-title text-center" width="25%">가입일시</th>
+								<th class="column-title text-center" width="7%">탈퇴여부</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:object=${user} th:each="user: ${users}" th:attr=data-href=@{/v/users/__${user.id}__}>
+								<td class="column-title text-center" th:text="*{ id }"></td>
+								<td class="column-title text-center" th:text="*{ type eq '0' ? '일반' : type eq '1' ? '사업자' : '미설정' }"></td>
+								<td class="column-title text-center" th:text="*{ name }"></td>
+								<td class="column-title text-center" th:text="*{ phoneNumber }"></td>
+								<td class="column-title text-center" th:text="*{ birthDate }"></td>
+								<td class="column-title text-center" th:text="*{ sex eq '1' ? '남자' : sex eq '2' ? '여자' : '미설정' }"></td>
+								<td class="column-title text-center" th:text="*{ createTimestamp }"></td>
+								<td class="column-title text-center" th:text="*{ del ? 'Y' : 'N' }"></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
-		</div>	
-	</section>
-	<footer>
-		<p>
-			JINI WORLD - DEMO
-		</p>
-	</footer>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script>
-		$("#nav_menu_area #nav_menu li").on("click", function() {
-			$("#nav_menu_area #nav_menu li").removeClass("active");
-			$(this).addClass("active");
-			location.href = $(this).data('href');
-		});
-	</script>
-</body>
-</html>
+		</div>
+	</div>
+</section>
