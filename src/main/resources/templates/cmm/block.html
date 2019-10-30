@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="f-header">
+	<meta name="description" content="Welcome to jiniworld!">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&amp;subset=korean" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" th:href="@{/static/css/common.css}"/>
+</th:block>
+
+<th:block th:fragment="f-footer">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script>
+		$("#nav_menu_area #nav_menu li").on("click", function() {
+			$("#nav_menu_area #nav_menu li").removeClass("active");
+			$(this).addClass("active");
+			location.href = $(this).data('href');
+		});
+	</script>
+</th:block>
+
+</html>
