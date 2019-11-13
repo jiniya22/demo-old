@@ -16,27 +16,27 @@
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<thead>
-							<tr class="headings">
-								<th class="column-title text-center" width="10%">아이디</th>
-								<th class="column-title text-center" width="6%">유형</th>
-								<th class="column-title text-center" width="10%">이름</th>
-								<th class="column-title text-center" width="15%">전화번호</th>
-								<th class="column-title text-center" width="10%">생일</th>
-								<th class="column-title text-center" width="7%">성별</th>
-								<th class="column-title text-center" width="25%">가입일시</th>
-								<th class="column-title text-center" width="7%">탈퇴여부</th>
+							<tr class="text-center">
+								<th width="10%">아이디</th>
+								<th width="6%">유형</th>
+								<th width="10%">이름</th>
+								<th width="15%">전화번호</th>
+								<th width="10%">생일</th>
+								<th width="7%">성별</th>
+								<th width="25%">가입일시</th>
+								<th width="7%">탈퇴여부</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:object=${user} th:each="user: ${users}" th:attr=data-href=@{/v/users/__${user.id}__}>
-								<td class="column-title text-center" th:text="*{ id }"></td>
-								<td class="column-title text-center" th:text="*{ type eq '0' ? '일반' : type eq '1' ? '사업자' : '미설정' }"></td>
-								<td class="column-title text-center" th:text="*{ name }"></td>
-								<td class="column-title text-center" th:text="*{ phoneNumber }"></td>
-								<td class="column-title text-center" th:text="*{ birthDate }"></td>
-								<td class="column-title text-center" th:text="*{ sex eq '1' ? '남자' : sex eq '2' ? '여자' : '미설정' }"></td>
-								<td class="column-title text-center" th:text="*{ createTimestamp }"></td>
-								<td class="column-title text-center" th:text="*{ del ? 'Y' : 'N' }"></td>
+							<tr class="text-center" th:object="${user}" th:each="user: ${users}" th:attr="data-href=@{/v/users/__${user.id}__}">
+								<td th:text="*{ id }"></td>
+								<td th:text="*{ type eq '0' ? '일반' : type eq '1' ? '사업자' : '미설정' }"></td>
+								<td th:text="*{ name }"></td>
+								<td th:text="*{ phoneNumber }"></td>
+								<td th:text="*{ birthDate }"></td>
+								<td th:text="*{ sex eq '1' ? '남자' : sex eq '2' ? '여자' : '미설정' }"></td>
+								<td th:text="*{ createTimestamp }"></td>
+								<td th:text="*{ del ? 'Y' : 'N' }"></td>
 							</tr>
 						</tbody>
 					</table>
