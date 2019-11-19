@@ -11,38 +11,57 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 <style type="text/css">
 body {
-    color: #73879C; background: #f7f7f7; font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-    font-size: 13px; font-weight: 400; line-height: 1.471;
-}
-.login_wrapper {
-    right: 0px; margin: 0px auto; margin-top: 5%; max-width: 350px; position: relative;
-}
-.form-control, .btn {
-	padding: 6px 12px; font-size:14px; line-height: 1.5;
-}
-.form-control{
-	border:1px solid #ccc; border-radius: 4px; box-shadow: 0 1px 1px rgba(0,0,0,.075);
-}
-.btn-block{
-	color:white; display: block; width:100%; text-align:center; vertical-align:middle; touch-action:manipulation;
-	font-weight:400; white-space:nowrap; user-select:none;
+	color: #73879C;
+	background: #f7f7f7;
+	font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.471;
 }
 
-section.login_content2 {
-	margin: 0 auto; padding: 25px 0 0; position: relative; text-align: center; text-shadow: 0 1px 0 #fff; min-width: 280px;
+.login_wrapper {
+	margin: calc(50vh - 193px) auto 0px;
+	max-width: 350px;
+	position: relative;
 }
-section.login_content2 h1 {
-	letter-spacing: -0.05em; line-height: 20px; margin: 10px 0 30px; font-size: 20px; font-weight: 600;
+
+.form-control, .btn {
+	font-size: 14px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+section {
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	text-shadow: 0 1px 0 #fff;
+	min-width: 280px;
+}
+
+section h1 {
+	letter-spacing: -0.05em;
+	line-height: 20px;
+	margin: 10px 0 30px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+section div {
+	margin-bottom: 15px;
 }
 
 .separator {
-    border-top: 1px solid #d8d8d8; margin-top: 10px; 
+	border-top: 1px solid #d8d8d8;
+	margin-top: 10px;
 }
 
 .btn-success {
-    background: #26b99a; border: 1px solid #169f85;
+	background: #26b99a;
+	border: 1px solid #169f85;
 }
-.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
+
+.btn-success:hover, .btn-success:focus, .btn-success:active,
+.btn-success.active, .open .dropdown-toggle.btn-success {
 	background: #169f85;
 }
 </style>
@@ -50,42 +69,28 @@ section.login_content2 h1 {
 </head>
 
 <body class="login">
-	<div>
-		<div class="login_wrapper">
-			<div class="animate form login_form">
-				<section class="login_content2">
-					<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="jiniWorld" id="btn_loginHome"></h1>
-	<form name="securedLoginFrm" method="post" action="/login" th:action="@{/login}">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<div>
-						<input type="text" name="username" class="form-control" placeholder="username" autocomplete="off" required/>
-						<p></p>
-					</div>
-					<div>
-						<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
-						<p></p>
-					</div>
-					<p class="text-left">
-						&nbsp;
-					</p>
-					<div style="margin-bottom:30px;">
-						<button type="button" class="btn btn-success btn-large btn-block" id="btn_login">로그인</button>
-					</div>
-					<div class="clearfix"></div>
-	</form>	
-					<div class="separator">
-						<div class="clearfix"></div>
-						<br />
-						<div>
-							<h1>
-								DEMO
-							</h1>
-							<p>©2019 All Rights Reserved.</p>
-						</div>
-					</div>
-				</section>				
+	<div class="login_wrapper">
+		<section>
+			<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
+<form name="securedLoginFrm" method="post" action="/login" th:action="@{/login}">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<div>
+				<input type="text" name="username" class="form-control" placeholder="username" autocomplete="off" required/>
 			</div>
-		</div>
+			<div style="margin-bottom: 50px;">
+				<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
+			</div>
+			<div>
+				<button type="button" class="btn btn-info btn-large form-control" id="btn_login">로그인</button>
+			</div>
+</form>
+
+			<div class="separator" style="margin: 30px 0px;"></div>
+			<div>
+				<h1>DEMO</h1>
+				<p>©2019 All Rights Reserved.</p>
+			</div>
+		</section>
 	</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -99,7 +104,7 @@ $(document.body).delegate(":input", "keyup", function (e) {
 $("#btn_login").on("click", function() {
 	var username = $("input[name='username']").val(), password = $("input[name='password']").val();
 	if (username == "") {
-		alert("이메일을 입력하세요");
+		alert("사용자이름을 입력하세요");
 		return false;
 	} else if (password == "") {
 		alert("비밀번호를 입력하세요");
