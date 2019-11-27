@@ -24,7 +24,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 			.antMatchers("/").permitAll()
 			.antMatchers("/v", "/v/**").access("hasRole('ROLE_VIEW')")
 		.and()
-			.formLogin().loginPage("/login").permitAll()
+			.formLogin().loginPage("/login").defaultSuccessUrl("/v").permitAll()
 			.usernameParameter("username").passwordParameter("password")
 		.and()
 			.logout().permitAll()		
