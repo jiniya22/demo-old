@@ -5,13 +5,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class LoginController {
 	
 	@GetMapping(value = "/")
-	@PostMapping(value = "/")
 	public String index(@AuthenticationPrincipal User user){
 		if(user != null) {
 			if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
