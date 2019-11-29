@@ -26,11 +26,6 @@ spring:
       fail-on-empty-beans: false
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Seoul
-  data:
-    rest:      default-page-size: 5
-      max-page-size: 20
-      detection-strategy: annotated # default
-      base-path: /api
   security:    user:      name: admin
       password: admin
       roles:      - ADMIN
@@ -53,3 +48,9 @@ server:
   port: 8989
   servlet:
     context-path: /
+logging:    
+  exception-conversion-word: '%wEx'
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(${LOG_LEVEL_PATTERN:-%5p}){green} %clr(${PID:- }){magenta} %clr(%-40.40logger{39}){cyan} %clr(: %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}){faint}'
+  level:
+    web: debug
