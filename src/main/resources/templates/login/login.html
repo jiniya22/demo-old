@@ -72,8 +72,7 @@ hr.separator {
 	<div class="login_wrapper">
 		<section>
 			<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
-			<form name="securedLoginFrm" method="post" action="/login" th:action="@{/login}">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<form method="post" th:action="@{/login}">
 				<div>
 					<input type="text" name="username" class="form-control" placeholder="username" autocomplete="off" required/>
 				</div>
