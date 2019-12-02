@@ -31,7 +31,8 @@
 		<div class="collapse navbar-collapse" id="nav_menu_area">
 			<ul class="navbar-nav" id="nav_menu" style="margin: 0 auto; width: 1140px;">
 				<li class='nav-item'  th:classappend="${currentPage eq 'home'} ? 'active' : ''" th:attr="data-href=@{/v}">홈</li>
-				<li sec:authorize="hasRole('ROLE_ADMIN')" class='nav-item' th:classappend="${currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
+				<li sec:authorize="hasRole('ROLE_VIEW')" class='nav-item' th:classappend="${currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
+				<li sec:authorize="hasRole('ROLE_VIEW')" class='nav-item' th:classappend="${currentPage eq 'store'} ? 'active' : ''" th:attr="data-href=@{/v/stores}">가맹점</li>
 			</ul>
 		</div>
 	</nav>

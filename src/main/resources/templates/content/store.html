@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="cmm/layout">
+
+<th:block layout:fragment="f-title">store 조회</th:block>
+
+<section layout:fragment="f-content">
+	<div class="container">
+		<div class="d-title">
+			<h2>store 조회</h2>
+		</div>
+		<div class="d-content">
+			<div class="row">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr class="text-center">
+								<th width="10%">아이디</th>
+								<th width="35%">이름</th>
+								<th width="25%">가맹점 분류</th>
+								<th width="20%">가입일시</th>
+								<th width="10%">삭제여부</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="text-center" th:object="${store}" th:each="store: ${stores}" th:attr="data-href=@{/v/stores/__${store.id}__}">
+								<td th:text="*{ id }"></td>
+								<td th:text="*{ name }"></td>
+								<td th:text="*{ storeBusiness }"></td>
+								<td th:text="*{ createTimestamp }"></td>
+								<td th:text="*{ del ? 'Y' : 'N' }"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="f-script">
+
+</th:block>

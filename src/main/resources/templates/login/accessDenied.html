@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiniworld 관리자</title>
+</head>
+<body>
+<script th:inline="javascript">
+/*<![CDATA[*/
+	if (confirm("접근 권한이 없는 아이디입니다.")) {
+		location.href = /*[[@{/login}]]*/;
+	} else {
+		location.href = /*[[@{/login}]]*/;
+	}
+ /*]]>*/
+</script>
+</body>
+</html>
