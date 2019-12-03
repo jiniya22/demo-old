@@ -37,7 +37,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 			.formLogin().loginPage("/login").defaultSuccessUrl("/v").permitAll()
 			.usernameParameter("username").passwordParameter("password")
 		.and()
-			.logout().permitAll()
+			.logout().invalidateHttpSession(true).deleteCookies("JSESSIONID")
 		.and().exceptionHandling().accessDeniedHandler(webAccessDeniedHandler)
 		.and()
 			.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());

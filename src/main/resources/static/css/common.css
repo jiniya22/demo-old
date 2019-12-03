@@ -30,6 +30,20 @@ header ul {
 header ul li {
 	display: inline-block;
 	padding-right: 5px;
+	max-width: 300px;
+	vertical-align: middle;
+}
+
+header ul li .gsc-control-cse, header ul li table.gsc-search-box td.gsc-input {
+	padding: 0;
+}
+
+header ul li form.gsc-search-box, header ul li table.gsc-search-box {
+	margin-bottom: 0;
+}
+
+header ul li .gsc-search-box input {
+	font-size: 13px;
 }
 
 nav#nav_area {

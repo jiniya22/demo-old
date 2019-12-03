@@ -37,6 +37,8 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
 			url = req.getContextPath() + "/v";
 		} else if (authentication != null && ((User) authentication.getPrincipal()).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_SWAGGER"))) {
 			url = req.getContextPath() + "/swagger-ui.html";
+		} else {
+			authentication.setAuthenticated(false);			
 		}
 		res.setStatus(HttpStatus.OK.value());
 		res.sendRedirect(url);
