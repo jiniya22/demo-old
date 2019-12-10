@@ -3,15 +3,13 @@ package me.jiniworld.demo.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import me.jiniworld.demo.models.entities.Store;
-import me.jiniworld.demo.models.entities.User;
-import me.jiniworld.demo.models.values.StoreValue;
 import me.jiniworld.demo.models.values.StoreValue;
 import me.jiniworld.demo.repositories.StoreRepository;
 
