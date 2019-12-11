@@ -1,9 +1,12 @@
 package me.jiniworld.demo.controllers.views;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -20,13 +23,16 @@ public class LoginController {
 	}
 	
 	@GetMapping(value = "/login")
-	public String login(@AuthenticationPrincipal User user){
-		if(user != null) {
-			if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
-				return "redirect:/v";
-			}
+	public String login(@AuthenticationPrincipal User user, Model mv, HttpSession session){
+		if(user != null && user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
+			return "redirect:/v";
 		}
 		return "login/login";
+	}
+	
+	@GetMapping(value = "/login/denied-page")
+	public String accessDenied(){
+		return "login/deniedPage";
 	}
 	
 }

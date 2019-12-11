@@ -83,7 +83,6 @@ hr.separator {
 					<button type="button" class="btn btn-info btn-large form-control" id="btn_login">로그인</button>
 				</div>
 			</form>
-
 			<hr class="separator"/>
 			<div>
 				<h1>DEMO</h1>
@@ -94,22 +93,26 @@ hr.separator {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/notify.min.js}"></script>
 <script>
-$(document.body).delegate(":input", "keyup", function (e) {
-	if (e.which == 13)
-		$("#btn_login").trigger("click");
-});
-
-$("#btn_login").on("click", function() {
-	var username = $("input[name='username']").val(), password = $("input[name='password']").val();
-	if (username == "") {
-		alert("사용자이름을 입력하세요");
-		return false;
-	} else if (password == "") {
-		alert("비밀번호를 입력하세요");
-		return false;
-	}
-	$(this).closest("form").submit();
+$(function() {
+	
+	$(document.body).delegate(":input", "keyup", function (e) {
+		if (e.which == 13)
+			$("#btn_login").trigger("click");
+	});
+	
+	$("#btn_login").on("click", function() {
+		var username = $("input[name='username']").val(), password = $("input[name='password']").val();
+		if (username == "") {
+			alert("사용자이름을 입력하세요");
+			return false;
+		} else if (password == "") {
+			alert("비밀번호를 입력하세요");
+			return false;
+		}
+		$(this).closest("form").submit();
+	});
 });
 </script>
 </body>

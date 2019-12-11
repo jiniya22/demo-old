@@ -1,5 +1,6 @@
 package me.jiniworld.demo.commons;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -7,9 +8,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import me.jiniworld.demo.commons.handlers.WebAccessDeniedHandler;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+	
+	private final WebAccessDeniedHandler webAccessDeniedHandler;
+	
+	@Autowired
+	public WebSecurityConfig(WebAccessDeniedHandler webAccessDeniedHandler) {
+		this.webAccessDeniedHandler = webAccessDeniedHandler;
+	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -24,10 +34,11 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 			.antMatchers("/v", "/v/**").access("hasRole('ROLE_VIEW')")
 			.anyRequest().authenticated()
 		.and()
-			.formLogin().loginPage("/login").defaultSuccessUrl("/v")
+			.formLogin().loginPage("/login").defaultSuccessUrl("/v", true)
 			.usernameParameter("username").passwordParameter("password")
 		.and()
 			.logout().invalidateHttpSession(true).deleteCookies("JSESSIONID")
+		.and().exceptionHandling().accessDeniedHandler(webAccessDeniedHandler)
 		.and()
 			.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
