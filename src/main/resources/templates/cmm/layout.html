@@ -7,7 +7,7 @@
 	<title>
 		<th:block layout:fragment="f-title">demo</th:block>
 	</title>
-	<th:block th:insert="cmm/block :: f-header"></th:block>	
+	<th:block th:insert="cmm/block :: f-header"></th:block>
 </head>
 <body>
 	<header>
@@ -15,10 +15,6 @@
 			<a th:href="@{/v}"><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo page" id="btn_home" /></a>
 		</h1>
 		<ul>
-			<li>
-				<script async src="https://cse.google.com/cse.js?cx=partner-pub-7884770049374942:1324266712"></script>
-<div class="gcse-search"></div>
-			</li>
 			<li sec:authorize="isAuthenticated()">
 				<span sec:authentication="principal.username"></span> 님 반가워요!
 			</li>
@@ -35,8 +31,8 @@
 		<div class="collapse navbar-collapse" id="nav_menu_area">
 			<ul class="navbar-nav" id="nav_menu" style="margin: 0 auto; width: 1140px;">
 				<li class='nav-item'  th:classappend="${currentPage eq 'home'} ? 'active' : ''" th:attr="data-href=@{/v}">홈</li>
-				<li sec:authorize="hasRole('ROLE_VIEW')" class='nav-item' th:classappend="${currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
-				<li sec:authorize="hasRole('ROLE_VIEW')" class='nav-item' th:classappend="${currentPage eq 'store'} ? 'active' : ''" th:attr="data-href=@{/v/stores}">가맹점</li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class='nav-item' th:classappend="${currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
+				<li class='nav-item' th:classappend="${currentPage eq 'store'} ? 'active' : ''" th:attr="data-href=@{/v/stores}">가맹점</li>
 			</ul>
 		</div>
 	</nav>
