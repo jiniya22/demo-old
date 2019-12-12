@@ -12,7 +12,7 @@ import me.jiniworld.demo.commons.handlers.WebAccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private final WebAccessDeniedHandler webAccessDeniedHandler;
 	
@@ -29,7 +29,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/", "/login", "/login/**").permitAll()
+			.antMatchers("/", "/login").permitAll()
 			.antMatchers("/v/users").access("hasRole('ROLE_ADMIN')")
 			.antMatchers("/v", "/v/**").access("hasRole('ROLE_VIEW')")
 			.anyRequest().authenticated()

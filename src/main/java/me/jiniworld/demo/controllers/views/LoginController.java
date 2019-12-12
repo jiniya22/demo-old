@@ -30,9 +30,9 @@ public class LoginController {
 		return "login/login";
 	}
 	
-	@GetMapping(value = "/login/denied-page")
+	@GetMapping(value = "/err/denied-page")
 	public String accessDenied(){
-		return "login/deniedPage";
+		return "err/deniedPage";
 	}
 	
 }

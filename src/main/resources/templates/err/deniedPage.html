@@ -9,13 +9,15 @@
 <body>
 <script th:inline="javascript">
 window.onload = function(){
-	/*<![CDATA[*/
-	if (confirm([[${msg}]])) {
-		location.href = /*[[@{/login}]]*/;
+/*<![CDATA[*/
+	var nextPage = [[@{__${nextPage}__}]], msg = [[${msg}]];
+	if(nextPage) {
+		alert(msg);
+		location.href = nextPage;
 	} else {
-		location.href = /*[[@{/login}]]*/;
+		location.href = [[@{/login}]];
 	}
- /*]]>*/
+/*]]>*/
 };
 </script>
 </body>

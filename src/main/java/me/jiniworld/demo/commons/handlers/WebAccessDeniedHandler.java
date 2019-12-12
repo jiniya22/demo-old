@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,19 +25,24 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest req, HttpServletResponse res, AccessDeniedException ade)
 			throws IOException, ServletException {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String url = req.getContextPath() +"/login/denied-page";
+		res.setStatus(HttpStatus.FORBIDDEN.value());
+		
 		if(ade instanceof AccessDeniedException) {
-			if (authentication != null && ((User) authentication.getPrincipal()).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
-				url = req.getContextPath() + "/v";
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (authentication != null && 
+					((User) authentication.getPrincipal()).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
+				req.setAttribute("msg", "접근권한 없는 사용자입니다.");
+				req.setAttribute("nextPage", "/v");
 			} else {
 				req.setAttribute("msg", "로그인 권한이 없는 아이디입니다.");
+				req.setAttribute("nextPage", "/login");
+				res.setStatus(HttpStatus.UNAUTHORIZED.value());
 				SecurityContextHolder.clearContext();
 			}
 		} else {
 			logger.info(ade.getClass().getCanonicalName());			
 		}		
-		req.getRequestDispatcher(url).forward(req, res);		
+		req.getRequestDispatcher("/err/denied-page").forward(req, res);
 	}
 
 }
