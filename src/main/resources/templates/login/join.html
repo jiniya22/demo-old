@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="cmm/layout_login">
+
+<section layout:fragment="f-content">
+	<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
+	<form method="post" th:action="@{/login}">
+		<div>
+			<input type="text" name="username" class="form-control" placeholder="username" autocomplete="off" required/>
+		</div>
+		<div style="margin-bottom: 50px;">
+			<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
+		</div>
+		<div>
+			<button type="button" class="btn btn-dark btn-large form-control" id="btn_join">Join</button>
+		</div>
+	</form>
+	<hr class="separator"/>
+	<div>
+		<h1>DEMO</h1>
+		<p>©2019 All Rights Reserved.</p>
+	</div>
+</section>

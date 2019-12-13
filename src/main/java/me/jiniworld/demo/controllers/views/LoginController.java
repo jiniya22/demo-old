@@ -23,7 +23,7 @@ public class LoginController {
 	}
 	
 	@GetMapping(value = "/login")
-	public String login(@AuthenticationPrincipal User user, Model mv, HttpSession session){
+	public String login(@AuthenticationPrincipal User user){
 		if(user != null && user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
 			return "redirect:/v";
 		}
@@ -35,4 +35,11 @@ public class LoginController {
 		return "err/deniedPage";
 	}
 	
+	@GetMapping(value = "/join")
+	public String join(@AuthenticationPrincipal User user){
+		if(user != null && user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
+			return "redirect:/v";
+		}
+		return "login/join";
+	}
 }

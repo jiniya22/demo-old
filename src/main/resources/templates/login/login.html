@@ -1,99 +1,34 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DEMO</title>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="cmm/layout_login">
 
-<link rel="shortcut icon" th:href="@{/static/img/gift.png}">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<style type="text/css">
-body {
-	color: #73879C;
-	background: #f7f7f7;
-	font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
-	font-size: 13px;
-	font-weight: 400;
-	line-height: 1.471;
-}
-
-.login_wrapper {
-	margin: calc(50vh - 193px) auto 0px;
-	max-width: 350px;
-	position: relative;
-}
-
-.form-control, .btn {
-	font-size: 14px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .075);
-}
-
-section {
-	margin: 0 auto;
-	position: relative;
-	text-align: center;
-	text-shadow: 0 1px 0 #fff;
-	min-width: 280px;
-}
-
-section h1 {
-	letter-spacing: -0.05em;
-	line-height: 20px;
-	margin: 10px 0 30px;
-	font-size: 20px;
-	font-weight: 600;
-}
-
-section div {
-	margin-bottom: 15px;
-}
-
-hr.separator {
-	border-top: 1px solid #d8d8d8;
-	margin: 30px 0px; 
-}
-
-.btn-success {
-	background: #26b99a;
-	border: 1px solid #169f85;
-}
-
-.btn-success:hover, .btn-success:focus, .btn-success:active,
-.btn-success.active, .open .dropdown-toggle.btn-success {
-	background: #169f85;
-}
-</style>
-
-</head>
-
-<body>
-	<div class="login_wrapper">
-		<section>
-			<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
-			<form method="post" th:action="@{/login}">
-				<div>
-					<input type="text" name="username" class="form-control" placeholder="username" autocomplete="off" required/>
-				</div>
-				<div style="margin-bottom: 50px;">
-					<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
-				</div>
-				<div>
-					<button type="button" class="btn btn-info btn-large form-control" id="btn_login">로그인</button>
-				</div>
-			</form>
-			<hr class="separator"/>
-			<div>
-				<h1>DEMO</h1>
-				<p>©2019 All Rights Reserved.</p>
-			</div>
-		</section>
+<section layout:fragment="f-content">
+	<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
+	<form method="post" th:action="@{/login}">
+		<div>
+			<input type="text" name="username" class="form-control" placeholder="username" autocomplete="off" required/>
+		</div>
+		<div style="margin-bottom: 50px;">
+			<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
+		</div>
+		<div>
+			<button type="button" class="btn btn-info btn-large form-control" id="btn_login">Login</button>
+		</div>
+		<div>
+			<button type="button" class="btn btn-secondary btn-large form-control" id="btn_joinForm">Join</button>
+		</div>
+	</form>
+	<hr class="separator"/>
+	<div>
+		<h1>DEMO</h1>
+		<p>©2019 All Rights Reserved.</p>
 	</div>
+</section>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script type="text/javascript" th:src="@{/static/js/notify.min.js}"></script>
+<th:block layout:fragment="f-script">
 <script>
 $(function() {
 	
@@ -113,7 +48,10 @@ $(function() {
 		}
 		$(this).closest("form").submit();
 	});
+	
+	$("#btn_joinForm").on("click", function() {
+		location.href = "[[@{/join}]]";
+	})
 });
 </script>
-</body>
-</html>
+</th:block>

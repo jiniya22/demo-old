@@ -40,8 +40,8 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
 				SecurityContextHolder.clearContext();
 			}
 		} else {
-			logger.info(ade.getClass().getCanonicalName());			
-		}		
+			logger.info(ade.getClass().getCanonicalName());
+		}
 		req.getRequestDispatcher("/err/denied-page").forward(req, res);
 	}
 
