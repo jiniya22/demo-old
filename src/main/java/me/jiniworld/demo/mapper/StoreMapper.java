@@ -8,3 +8,15 @@ public interface StoreMapper {
 	
 	public Optional<Store> findById(long id);
 }
+
+//@Component
+//public class StoreMapper {
+//	
+//	@Autowired
+//	private SqlSession sqlSessionTemplate;
+//	
+//	public Optional<Store> findById(long id) {
+//		return Optional.ofNullable(sqlSessionTemplate.selectOne("me.jiniworld.demo.mapper.StoreMapper.findById", id));
+//	}
+//	
+//}
