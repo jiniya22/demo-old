@@ -11,26 +11,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.jiniworld.demo.mapper.StoreMapper;
-import me.jiniworld.demo.mapper.UserMapper;
 import me.jiniworld.demo.models.entities.Store;
 import me.jiniworld.demo.models.entities.User;
+import me.jiniworld.demo.services.StoreService;
+import me.jiniworld.demo.services.UserService;
 
 @RequestMapping(value = "/test", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RestController
 public class TestController {
 	
+	private final StoreService storeService;
+	private final UserService userService;
+	
 	@Autowired
-	private UserMapper userMapper;
-	@Autowired
-	private StoreMapper storeMapper;
+	public TestController(StoreService storeService, UserService userService) {
+		this.storeService = storeService;
+		this.userService = userService;
+	}
 	
 	
 	@GetMapping("/users/{id}")
 	public Map<String, Object> selectUser(@PathVariable("id") long id) {
 		Map<String, Object> response = new HashMap<>();
 		
-		Optional<User> oUser = userMapper.selectUser(id);
+		Optional<User> oUser = userService.findByIdUsingMapper(id);
 		
 		if(oUser.isPresent()) {
 			response.put("user", oUser);
@@ -46,7 +50,7 @@ public class TestController {
 	public Map<String, Object> selectUser2(@PathVariable("id") long id) {
 		Map<String, Object> response = new HashMap<>();
 		
-		Optional<User> oUser = userMapper.selectUser2(id);
+		Optional<User> oUser = userService.findByIdUsingMapper2(id);
 		
 		if(oUser.isPresent()) {
 			response.put("user", oUser);
@@ -62,7 +66,7 @@ public class TestController {
 	public Map<String, Object> selectStore(@PathVariable("id") long id) {
 		Map<String, Object> response = new HashMap<>();
 		
-		Optional<Store> oStore = storeMapper.selectStore(id);
+		Optional<Store> oStore = storeService.findByIdUsingMapper(id);
 		
 		if(oStore.isPresent()) {
 			response.put("store", oStore.get());

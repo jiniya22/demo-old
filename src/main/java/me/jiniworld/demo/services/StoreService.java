@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import me.jiniworld.demo.mapper.StoreMapper;
 import me.jiniworld.demo.models.entities.Store;
 import me.jiniworld.demo.models.values.StoreValue;
 import me.jiniworld.demo.repositories.StoreRepository;
@@ -17,14 +18,20 @@ import me.jiniworld.demo.repositories.StoreRepository;
 public class StoreService {
 
 	private final StoreRepository storeRepository;
+	private final StoreMapper storeMapper;
 	
 	@Autowired
-	public StoreService(StoreRepository storeRepository) {
+	public StoreService(StoreRepository storeRepository, StoreMapper storeMapper) {
 		this.storeRepository = storeRepository;
+		this.storeMapper = storeMapper;
 	}
 	
 	public Optional<Store> findById(Long id) {
 		return storeRepository.findById(id);
+	}
+	
+	public Optional<Store> findByIdUsingMapper(Long id) {
+		return storeMapper.findById(id);
 	}
 	
 	@Transactional

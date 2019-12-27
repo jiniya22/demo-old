@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import me.jiniworld.demo.mapper.UserMapper;
 import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.repositories.UserRepository;
@@ -17,14 +18,24 @@ import me.jiniworld.demo.repositories.UserRepository;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final UserMapper userMapper;
 	
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, UserMapper userMapper) {
 		this.userRepository = userRepository;
+		this.userMapper = userMapper;
 	}
 	
 	public Optional<User> findById(Long id) {
 		return userRepository.findById(id);
+	}
+	
+	public Optional<User> findByIdUsingMapper(Long id) {
+		return userMapper.findById(id);
+	}
+	
+	public Optional<User> findByIdUsingMapper2(Long id) {
+		return userMapper.findById2(id);
 	}
 	
 	@Transactional
