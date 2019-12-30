@@ -13,9 +13,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
+
+import me.jiniworld.demo.models.entities.SecurityUser;
 
 @Component
 public class WebAccessDeniedHandler implements AccessDeniedHandler {
@@ -30,7 +31,7 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
 		if(ade instanceof AccessDeniedException) {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (authentication != null && 
-					((User) authentication.getPrincipal()).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
+					((SecurityUser) authentication.getPrincipal()).getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VIEW"))) {
 				req.setAttribute("msg", "접근권한 없는 사용자입니다.");
 				req.setAttribute("nextPage", "/v");
 			} else {

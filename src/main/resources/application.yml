@@ -26,10 +26,6 @@ spring:
       fail-on-empty-beans: false
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Seoul
-  security:    user:      name: admin
-      password: admin
-      roles:      - ADMIN
-      - VIEW
   mvc:
     static-path-pattern: /static/**
   thymeleaf:

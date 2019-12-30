@@ -1,6 +1,5 @@
 # Spring Boot Tutorial
 
-JPA ORM을 이용한 Spring Boot Framework 웹 애플리케이션 설정 방법을 배워보자.
 
 ## 개발환경
 
@@ -9,7 +8,7 @@ JPA ORM을 이용한 Spring Boot Framework 웹 애플리케이션 설정 방법�
 - Maven
 - MySQL 5.7
 
-***
+<br />
 
 ## 튜토리얼 과정
 

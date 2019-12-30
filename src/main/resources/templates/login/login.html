@@ -9,7 +9,7 @@
 	<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
 	<form method="post" th:action="@{/login}">
 		<div>
-			<input type="text" name="username" class="form-control" placeholder="username" autocomplete="off" required/>
+			<input type="text" name="email" class="form-control" placeholder="email" autocomplete="off" required/>
 		</div>
 		<div style="margin-bottom: 50px;">
 			<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
@@ -38,8 +38,8 @@ $(function() {
 	});
 	
 	$("#btn_login").on("click", function() {
-		var username = $("input[name='username']").val(), password = $("input[name='password']").val();
-		if (username == "") {
+		var email = $("input[name='email']").val(), password = $("input[name='password']").val();
+		if (email == "") {
 			alert("사용자이름을 입력하세요");
 			return false;
 		} else if (password == "") {

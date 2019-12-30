@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<User> findAllByDel(boolean del);
 
 	List<User> findAllByDelOrderByIdDesc(boolean del, Pageable pageable);
+	
+	Optional<User> findByEmailAndDel(String email, boolean del);
+	
 }
