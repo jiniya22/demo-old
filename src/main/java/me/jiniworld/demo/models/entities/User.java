@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
-import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -58,7 +57,7 @@ public class User extends BaseEntity implements Serializable {
 	@JsonManagedReference
 	@OneToMany(targetEntity = UserRole.class)
 	@Where(clause = "del = false")
-	private List<GrantedAuthority> userRoles;
+	private List<UserRole> userRoles;
 	
 	@Builder
 	public User(String type, String name, String email, String sex, String birthDate, String phoneNumber, String password) {

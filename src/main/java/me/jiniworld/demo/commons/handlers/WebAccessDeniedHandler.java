@@ -1,6 +1,8 @@
 package me.jiniworld.demo.commons.handlers;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import me.jiniworld.demo.models.entities.SecurityUser;
+import me.jiniworld.demo.models.entities.UserRole;
+import me.jiniworld.demo.models.entities.UserRole.RoleType;
 
 @Component
 public class WebAccessDeniedHandler implements AccessDeniedHandler {
@@ -30,15 +34,20 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
 		if(ade instanceof AccessDeniedException) {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (authentication != null) {
-				req.setAttribute("msg", "접근권한 없는 사용자입니다.");
-				if (((SecurityUser) authentication.getPrincipal()).getAuthorityNames().contains("ROLE_VIEW")) {
-					req.setAttribute("nextPage", "/v");
-				} 
-			} else {
-				req.setAttribute("msg", "로그인 권한이 없는 아이디입니다.");
-				req.setAttribute("nextPage", "/login");
-				res.setStatus(HttpStatus.UNAUTHORIZED.value());
-				SecurityContextHolder.clearContext();
+				SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+				List<UserRole> userRoles = securityUser.getUserRoles();
+				if(!userRoles.isEmpty()) {
+					List<RoleType> roleNames = userRoles.stream().map(f -> f.getRoleName()).collect(Collectors.toList());
+					req.setAttribute("msg", "접근권한 없는 사용자입니다.");
+					if (roleNames.contains(RoleType.ROLE_VIEW)) {
+						req.setAttribute("nextPage", "/v");
+					}
+				} else {
+					req.setAttribute("msg", "로그인 권한이 없는 아이디입니다.");
+					req.setAttribute("nextPage", "/login"); 
+					res.setStatus(HttpStatus.UNAUTHORIZED.value());
+					SecurityContextHolder.clearContext();
+				}
 			}
 		} else {
 			logger.info(ade.getClass().getCanonicalName());

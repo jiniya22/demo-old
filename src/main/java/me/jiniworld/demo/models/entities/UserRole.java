@@ -34,7 +34,7 @@ public class UserRole extends BaseEntity implements Serializable, GrantedAuthori
 	
 	@Override
 	public String getAuthority() {
-		return this.getRoleName().name();
+		return this.roleName.name();
 	}
 	
 }
