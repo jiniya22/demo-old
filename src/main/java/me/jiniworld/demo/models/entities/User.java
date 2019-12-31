@@ -55,7 +55,7 @@ public class User extends BaseEntity implements Serializable {
 	@Singular("userRoles")
 	@JsonIgnoreProperties({"userId", "createTimestamp", "updateTimestamp", "del"})
 	@JsonManagedReference
-	@OneToMany(targetEntity = UserRole.class)
+	@OneToMany(mappedBy="user", targetEntity = UserRole.class)
 	@Where(clause = "del = false")
 	private List<UserRole> userRoles;
 	

@@ -6,10 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +27,11 @@ public class UserRole extends BaseEntity implements Serializable, GrantedAuthori
 	
 	private static final long serialVersionUID = 7943607393308984161L;
 	
-	@JoinColumn(name = "user_id", nullable=false, columnDefinition="INT(11)")
-	private long userId;
+	@JsonManagedReference
+	@JsonIgnoreProperties({"userRoles", "createTimestamp", "updateTimestamp", "del"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_USER_ROLE_USER_ID"))
+	private User user;
 	
 	@Column(name="role_name", nullable=false, length = 20)
 	@Enumerated(EnumType.STRING)
