@@ -1,19 +1,27 @@
 package me.jiniworld.demo.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
+import org.springframework.security.core.GrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
@@ -44,6 +52,13 @@ public class User extends BaseEntity implements Serializable {
 	
 	@Column(nullable = false, length = 150)
 	private String password;
+	
+	@Singular("userRoles")
+	@JsonIgnoreProperties({"userId", "createTimestamp", "updateTimestamp", "del"})
+	@JsonManagedReference
+	@OneToMany(targetEntity = UserRole.class)
+	@Where(clause = "del = false")
+	private List<GrantedAuthority> userRoles;
 	
 	@Builder
 	public User(String type, String name, String email, String sex, String birthDate, String phoneNumber, String password) {

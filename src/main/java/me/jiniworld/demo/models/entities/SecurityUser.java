@@ -1,38 +1,33 @@
 package me.jiniworld.demo.models.entities;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class SecurityUser extends User implements UserDetails {
 
 	private static final long serialVersionUID = 8666468119299100306L;
 	
-	private List<GrantedAuthority> userRoles;
-	
-	public SecurityUser(User user, List<UserRole> userRoles) {
+	public SecurityUser(User user, List<GrantedAuthority> userRoles) {
 		super();
 		setId(user.getId());
 		setEmail(user.getEmail());
 		setName(user.getName());
 		setPassword(user.getPassword());
 		setDel(user.isDel());
-		this.userRoles = convertGrantedAuthorities(userRoles);
-	}
-	
-	private List<GrantedAuthority> convertGrantedAuthorities(List<UserRole> roles){
-		List<GrantedAuthority> userRoles = new ArrayList<>();
-		roles.forEach(role -> userRoles.add(new SimpleGrantedAuthority(role.getRoleName().name())));
-		return userRoles;
+		setUserRoles(userRoles);
 	}
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.userRoles;
+		return getUserRoles();
+	}
+	
+	public List<String> getAuthorityNames() {
+		return getUserRoles().stream().map(f -> f.getAuthority()).collect(Collectors.toList());
 	}
 
 	@Override
@@ -42,22 +37,22 @@ public class SecurityUser extends User implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return !isDel();
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return !isDel();
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return !isDel();
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return !isDel();
+		return true;
 	}
 
 }
