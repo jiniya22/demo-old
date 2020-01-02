@@ -19,6 +19,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        show_sql: true
+        hbm2ddl.auto: update
     generate-ddl: false
     open-in-view: false
   jackson:
