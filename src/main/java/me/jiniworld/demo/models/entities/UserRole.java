@@ -30,7 +30,7 @@ public class UserRole extends BaseEntity implements Serializable, GrantedAuthori
 	@JsonManagedReference
 	@JsonIgnoreProperties({"userRoles", "createTimestamp", "updateTimestamp", "del"})
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_USER_ROLE_USER_ID"))
+	@JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_USER_ROLE_USER"))
 	private User user;
 	
 	@Column(name="role_name", nullable=false, length = 20)
