@@ -1,7 +1,7 @@
 package me.jiniworld.demo.models.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +12,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -53,11 +52,10 @@ public class User extends BaseEntity implements Serializable {
 	private String password;
 	
 	@Singular("userRoles")
-	@JsonIgnoreProperties({"userId", "createTimestamp", "updateTimestamp", "del"})
-	@JsonManagedReference
+	@JsonIgnore
 	@OneToMany(mappedBy="user", targetEntity = UserRole.class)
 	@Where(clause = "del = false")
-	private List<UserRole> userRoles;
+	private Set<UserRole> userRoles;
 	
 	@Builder
 	public User(String type, String name, String email, String sex, String birthDate, String phoneNumber, String password) {

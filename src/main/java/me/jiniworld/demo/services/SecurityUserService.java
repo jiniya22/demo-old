@@ -34,7 +34,7 @@ public class SecurityUserService implements UserDetailsService {
 		Optional<User> oUser = userRepository.findByEmailAndDel(email, false);
 		if(oUser.isPresent()) {
 			User user = oUser.get();
-			return new SecurityUser(user, userRoleRepository.findByUserIdAndDel(user.getId(), false));
+			return new SecurityUser(user, userRoleRepository.findByUserAndDel(user, false));
 		} else {
 			logger.info("존재하지 않는 아이디입니다: " + email);
 			throw new UsernameNotFoundException(email);

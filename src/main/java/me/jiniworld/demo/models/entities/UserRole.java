@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +23,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-@Entity(name = "user_role")
+@Entity
+@Table(name = "user_role", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_name"})})
 @DynamicUpdate
 public class UserRole extends BaseEntity implements Serializable, GrantedAuthority {
 	

@@ -1,7 +1,6 @@
 package me.jiniworld.demo.models.entities;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,7 +18,7 @@ public class SecurityUser extends User implements UserDetails {
 	private final boolean credentialsNonExpired;
 	private final boolean enabled;
 	
-	public SecurityUser(User user, List<UserRole> userRoles) {
+	public SecurityUser(User user, Set<UserRole> userRoles) {
 		super();
 		setId(user.getId());
 		setEmail(user.getEmail());
