@@ -31,7 +31,7 @@ public class User extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -563329217866858622L;
 	
-	@Column(nullable = false, length = 1, columnDefinition = "CHAR(1) DEFAULT '0'")
+	@Column(nullable = false, length = 1, columnDefinition = "DEFAULT '0'")
 	private String type;
 	
 	@Column(nullable = false, unique = true, length = 100)
@@ -40,7 +40,7 @@ public class User extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String name;
 	
-	@Column(nullable = false, length = 1, columnDefinition = "CHAR(1) DEFAULT '1'")
+	@Column(nullable = false, length = 1, columnDefinition = "DEFAULT '1'")
 	private String sex;
 	
 	@Column(nullable = false, length = 6)
@@ -55,7 +55,7 @@ public class User extends BaseEntity implements Serializable {
 	@Singular("userRoles")
 	@JsonIgnoreProperties({"createTimestamp", "updateTimestamp", "del"})
 	@JsonManagedReference
-	@OneToMany(mappedBy="user", targetEntity = UserRole.class)
+	@OneToMany(mappedBy="user")
 	@Where(clause = "del = false")
 	private Set<UserRole> userRoles;
 	

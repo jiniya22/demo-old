@@ -37,7 +37,7 @@ public abstract class BaseEntity implements Serializable {
 	@Column(nullable = true, columnDefinition = "TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP")
 	private Date updateTimestamp;	
 
-	@Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
+	@Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
 	private boolean del;	
 	
 	@PrePersist
