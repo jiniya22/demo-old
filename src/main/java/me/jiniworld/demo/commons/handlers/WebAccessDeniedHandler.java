@@ -2,6 +2,7 @@ package me.jiniworld.demo.commons.handlers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import me.jiniworld.demo.models.entities.SecurityUser;
-import me.jiniworld.demo.models.entities.UserRole;
 import me.jiniworld.demo.models.entities.UserRole.RoleType;
 
 @Component
@@ -35,11 +35,10 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (authentication != null) {
 				SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-				List<UserRole> userRoles = securityUser.getUserRoles();
-				if(!userRoles.isEmpty()) {
-					List<RoleType> roleNames = userRoles.stream().map(f -> f.getRoleName()).collect(Collectors.toList());
+				Set<RoleType> roleTypes = securityUser.getRoleTypes();
+				if(!roleTypes.isEmpty()) {
 					req.setAttribute("msg", "접근권한 없는 사용자입니다.");
-					if (roleNames.contains(RoleType.ROLE_VIEW)) {
+					if (roleTypes.contains(RoleType.ROLE_VIEW)) {
 						req.setAttribute("nextPage", "/v");
 					}
 				} else {

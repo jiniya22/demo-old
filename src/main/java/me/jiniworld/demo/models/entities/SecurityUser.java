@@ -2,9 +2,13 @@ package me.jiniworld.demo.models.entities;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import me.jiniworld.demo.models.entities.UserRole.RoleType;
 
 public class SecurityUser extends User implements UserDetails {
 
@@ -32,6 +36,10 @@ public class SecurityUser extends User implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return getUserRoles();
+	}
+	
+	public Set<RoleType> getRoleTypes() {
+		return getUserRoles().stream().map(f -> f.getRoleName()).collect(Collectors.toSet());
 	}
 
 	@Override

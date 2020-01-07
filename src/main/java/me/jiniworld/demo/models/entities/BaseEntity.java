@@ -35,7 +35,7 @@ public abstract class BaseEntity implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = true, columnDefinition = "TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP")
-	protected Date updateTimestamp;	
+	private Date updateTimestamp;	
 
 	@Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
 	private boolean del;	
@@ -49,4 +49,5 @@ public abstract class BaseEntity implements Serializable {
 	protected void onUpdate() {
 		updateTimestamp = Timestamp.valueOf(LocalDateTime.now());
 	}
+	
 }
