@@ -10,6 +10,11 @@ public class SecurityUser extends User implements UserDetails {
 
 	private static final long serialVersionUID = 8666468119299100306L;
 	
+	private final boolean accountNonExpired;
+	private final boolean accountNonLocked;
+	private final boolean credentialsNonExpired;
+	private final boolean enabled;
+	
 	public SecurityUser(User user, List<UserRole> userRoles) {
 		super();
 		setId(user.getId());
@@ -18,6 +23,10 @@ public class SecurityUser extends User implements UserDetails {
 		setPassword(user.getPassword());
 		setDel(user.isDel());
 		setUserRoles(userRoles);
+		this.accountNonExpired = true;
+		this.accountNonLocked = true;
+		this.credentialsNonExpired = true;
+		this.enabled = true;
 	}
 	
 	@Override
@@ -32,22 +41,22 @@ public class SecurityUser extends User implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return true;
+		return this.accountNonExpired;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return this.accountNonLocked;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return true;
+		return this.credentialsNonExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return this.enabled;
 	}
 
 }
