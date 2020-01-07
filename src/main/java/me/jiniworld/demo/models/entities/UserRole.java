@@ -16,8 +16,8 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,8 +30,7 @@ public class UserRole extends BaseEntity implements Serializable, GrantedAuthori
 	
 	private static final long serialVersionUID = 7943607393308984161L;
 	
-	@JsonManagedReference
-	@JsonIgnoreProperties({"userRoles", "createTimestamp", "updateTimestamp", "del"})
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_USER_ROLE_USER"))
 	private User user;
@@ -44,6 +43,7 @@ public class UserRole extends BaseEntity implements Serializable, GrantedAuthori
 		ROLE_ADMIN, ROLE_VIEW
 	}
 	
+	@JsonIgnore
 	@Override
 	public String getAuthority() {
 		return this.roleName.name();
