@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
@@ -31,7 +32,8 @@ public class User extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -563329217866858622L;
 	
-	@Column(nullable = false, length = 1, columnDefinition = "DEFAULT '0'")
+	@Column(nullable = false, length = 1)
+	@ColumnDefault(value = "0")
 	private String type;
 	
 	@Column(nullable = false, unique = true, length = 100)
@@ -40,7 +42,8 @@ public class User extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String name;
 	
-	@Column(nullable = false, length = 1, columnDefinition = "DEFAULT '1'")
+	@Column(nullable = false, length = 1)
+	@ColumnDefault(value = "1")
 	private String sex;
 	
 	@Column(nullable = false, length = 6)
