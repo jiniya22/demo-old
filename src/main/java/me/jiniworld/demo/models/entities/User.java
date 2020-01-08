@@ -13,6 +13,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -32,8 +33,8 @@ public class User extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -563329217866858622L;
 	
-	@Column(nullable = false, length = 1)
 	@ColumnDefault(value = "0")
+	@Column(nullable = false, length = 1)
 	private String type;
 	
 	@Column(nullable = false, unique = true, length = 100)
@@ -42,8 +43,8 @@ public class User extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String name;
 	
-	@Column(nullable = false, length = 1)
 	@ColumnDefault(value = "1")
+	@Column(nullable = false, length = 1)
 	private String sex;
 	
 	@Column(nullable = false, length = 6)
@@ -52,6 +53,7 @@ public class User extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 20)
 	private String phoneNumber;
 	
+	@JsonIgnore
 	@Column(nullable = false, length = 150)
 	private String password;
 	

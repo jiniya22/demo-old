@@ -32,13 +32,13 @@ public class SecurityUser extends User implements UserDetails {
 		this.enabled = true;
 	}
 	
+	public Set<RoleType> getRoleTypes() {
+		return getUserRoles().stream().map(f -> f.getRoleName()).collect(Collectors.toSet());
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return getUserRoles();
-	}
-	
-	public Set<RoleType> getRoleTypes() {
-		return getUserRoles().stream().map(f -> f.getRoleName()).collect(Collectors.toSet());
 	}
 
 	@Override

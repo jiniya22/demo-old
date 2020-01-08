@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +20,13 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final UserMapper userMapper;
+	private final PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public UserService(UserRepository userRepository, UserMapper userMapper) {
+	public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.userMapper = userMapper;
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 	public Optional<User> findById(Long id) {
@@ -45,7 +48,7 @@ public class UserService {
 				.email(value.getEmail())
 				.birthDate(value.getBirthDate())
 				.name(value.getName())
-				.password(value.getPassword())
+				.password(passwordEncoder.encode(value.getPassword()))
 				.phoneNumber(value.getPhoneNumber())
 				.sex(value.getSex()).build();
 		

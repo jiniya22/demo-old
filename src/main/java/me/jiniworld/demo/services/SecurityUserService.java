@@ -32,12 +32,12 @@ public class SecurityUserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Optional<User> oUser = userRepository.findByEmailAndDel(email, false);
-		if(oUser.isPresent()) {
-			User user = oUser.get();
-			return new SecurityUser(user, userRoleRepository.findByUserAndDel(user, false));
-		} else {
+		if(!oUser.isPresent()) {
 			logger.info("존재하지 않는 아이디입니다: " + email);
 			throw new UsernameNotFoundException(email);
 		}
+		
+		User user = oUser.get();
+		return new SecurityUser(user, userRoleRepository.findByUserAndDel(user, false));
 	}
 }

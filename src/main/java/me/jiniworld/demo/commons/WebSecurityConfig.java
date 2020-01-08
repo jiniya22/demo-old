@@ -3,7 +3,6 @@ package me.jiniworld.demo.commons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -54,20 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider());
+		auth.userDetailsService(securityUserService)
+		.passwordEncoder(passwordEncoder());
 	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(securityUserService);
-		authProvider.setPasswordEncoder(passwordEncoder());
-		return authProvider;
 	}
 	
 }
