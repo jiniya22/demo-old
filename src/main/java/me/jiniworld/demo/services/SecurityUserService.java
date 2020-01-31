@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import me.jiniworld.demo.models.entities.SecurityUser;
 import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.repositories.UserRepository;
-import me.jiniworld.demo.repositories.UserRoleRepository;
 
 @Service
 public class SecurityUserService implements UserDetailsService {
@@ -21,23 +20,19 @@ public class SecurityUserService implements UserDetailsService {
 	private Logger logger = LoggerFactory.getLogger(SecurityUserService.class);
 	
 	private final UserRepository userRepository;
-	private final UserRoleRepository userRoleRepository;
 	
 	@Autowired
-	public SecurityUserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+	public SecurityUserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
-		this.userRoleRepository = userRoleRepository;
 	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Optional<User> oUser = userRepository.findByEmailAndDel(email, false);
+		Optional<User> oUser = userRepository.findWithUserRolesByEmailAndDel(email, false);
 		if(!oUser.isPresent()) {
 			logger.info("존재하지 않는 아이디입니다: " + email);
 			throw new UsernameNotFoundException(email);
 		}
-		
-		User user = oUser.get();
-		return new SecurityUser(user, userRoleRepository.findByUserAndDel(user, false));
+		return new SecurityUser(oUser.get());
 	}
 }

@@ -14,12 +14,13 @@ import me.jiniworld.demo.models.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@EntityGraph(attributePaths = "userRoles")
-	Optional<User> findById(Long id);
+	Optional<User> findWithUserRolesById(Long id);
 	
 	List<User> findAllByDel(boolean del);
 
 	List<User> findAllByDelOrderByIdDesc(boolean del, Pageable pageable);
 	
-	Optional<User> findByEmailAndDel(String email, boolean del);
+	@EntityGraph(attributePaths = "userRoles")
+	Optional<User> findWithUserRolesByEmailAndDel(String email, boolean del);
 	
 }

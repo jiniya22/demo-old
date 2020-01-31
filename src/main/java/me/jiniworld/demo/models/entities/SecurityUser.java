@@ -18,14 +18,14 @@ public class SecurityUser extends User implements UserDetails {
 	private final boolean credentialsNonExpired;
 	private final boolean enabled;
 	
-	public SecurityUser(User user, Set<UserRole> userRoles) {
+	public SecurityUser(User user) {
 		super();
 		setId(user.getId());
 		setEmail(user.getEmail());
 		setName(user.getName());
 		setPassword(user.getPassword());
 		setDel(user.isDel());
-		setUserRoles(userRoles);
+		setUserRoles(user.getUserRoles());
 		this.accountNonExpired = true;
 		this.accountNonLocked = true;
 		this.credentialsNonExpired = true;
