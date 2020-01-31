@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,14 @@ public class TestController {
 	
 	private final StoreService storeService;
 	private final UserService userService;
+	private final PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public TestController(StoreService storeService, UserService userService) {
+	public TestController(StoreService storeService, UserService userService,
+			PasswordEncoder passwordEncoder) {
 		this.storeService = storeService;
 		this.userService = userService;
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 	
@@ -76,5 +80,10 @@ public class TestController {
 		}
 		
 		return response;
+	}
+	
+	@GetMapping("/encode/{password}")
+	public String selectStore(@PathVariable("password") String password) {
+		return passwordEncoder.encode(password);
 	}
 }
