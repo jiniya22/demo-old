@@ -22,13 +22,13 @@
 				</ul>
 			</div>
 		</div>
-	</div>	
+	</div>
+	<div style="position:absolute; top: calc(50vh - 112.5px); left: calc(50% - 150px);">
+	<lottie-player th:src="@{/static/img/lottie/paper-airplane.json}" background="transparent" style="width: 300px; height: 225px;" speed="1" loop autoplay>
+	</lottie-player>
+</div>
 </section>
 
 <th:block layout:fragment="f-script">
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-<div style="position:absolute; top: calc(50vh - 112.5px); left: calc(50% - 150px);">
-	<lottie-player th:src="@{/static/img/lottie/paper-airplane.json}" background="transparent" style="width: 300px; height: 225px;" speed="1" loop autoplay >
-	</lottie-player>
-</div>
+	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </th:block>
