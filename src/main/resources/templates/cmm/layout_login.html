@@ -10,6 +10,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Welcome to jiniworld (demo)!">
+<meta th:name="_csrf" th:content="${_csrf.token}"/>
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
 <title>
 	<th:block layout:fragment="f-title">DEMO 로그인</th:block>
 </title>
@@ -81,11 +83,6 @@ hr.separator {
 		<section layout:fragment="f-content"></section>		
 	</div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script type="text/javascript" th:src="@{/static/js/notify.min.js}"></script>
-<th:block layout:fragment="f-script"></th:block>
-
-
-</body>
+	<th:block th:insert="cmm/block :: f-footer"></th:block>
+	<th:block layout:fragment="f-script"></th:block>
 </html>

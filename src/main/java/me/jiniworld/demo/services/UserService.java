@@ -12,19 +12,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import me.jiniworld.demo.mapper.UserMapper;
 import me.jiniworld.demo.models.entities.User;
+import me.jiniworld.demo.models.entities.UserRole;
+import me.jiniworld.demo.models.entities.UserRole.RoleType;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.repositories.UserRepository;
+import me.jiniworld.demo.repositories.UserRoleRepository;
 
 @Service
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final UserRoleRepository userRoleRepository;
 	private final UserMapper userMapper;
 	private final PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
+		this.userRoleRepository = userRoleRepository;
 		this.userMapper = userMapper;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -51,8 +56,21 @@ public class UserService {
 				.password(passwordEncoder.encode(value.getPassword()))
 				.phoneNumber(value.getPhoneNumber())
 				.sex(value.getSex()).build();
-		
 		return userRepository.save(user);
+	}
+	
+	@Transactional
+	public User join(UserValue value) {
+		User user = userRepository.save(User.builder()
+				.type(value.getType())
+				.email(value.getEmail())
+				.birthDate(value.getBirthDate())
+				.name(value.getName())
+				.password(passwordEncoder.encode(value.getPassword()))
+				.phoneNumber(value.getPhoneNumber())
+				.sex(value.getSex()).build());
+		userRoleRepository.save(UserRole.builder().user(user).roleName(RoleType.ROLE_VIEW).build());
+		return user;
 	}
 	
 	@Transactional

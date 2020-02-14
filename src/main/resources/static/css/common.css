@@ -108,6 +108,13 @@ section .container .d-title h2 {
 	font-size: 22px;
 }
 
+section #d-spin {
+	position: fixed;
+    top: calc(50% - 1rem);
+    left: calc(50% - 1rem);
+    color: #6c757d!important;
+}
+
 footer {
 	margin-bottom: 0;
 	background-color: white;

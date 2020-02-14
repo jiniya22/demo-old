@@ -16,7 +16,27 @@
 <th:block th:fragment="f-footer">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script type="text/javascript" th:src="@{/static/js/notify.min.js}"></script>
 	<script>
+		$.fn.serializeObject = function() {
+			var obj = null;
+			try {
+				if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+					var arr = this.serializeArray();
+					if (arr) {
+						obj = {};
+						jQuery.each(arr, function() {
+							obj[this.name] = this.value;
+						});
+					}
+				}
+			} catch (e) {
+				alert(e.message);
+			} finally {
+			}
+			return obj;
+		};
+	
 		$("#nav_menu_area #nav_menu li").on("click", function() {
 			$("#nav_menu_area #nav_menu li").removeClass("active");
 			$(this).addClass("active");

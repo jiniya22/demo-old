@@ -31,7 +31,6 @@
 <th:block layout:fragment="f-script">
 <script>
 $(function() {
-	
 	$(document.body).delegate(":input", "keyup", function (e) {
 		if (e.which == 13)
 			$("#btn_login").trigger("click");

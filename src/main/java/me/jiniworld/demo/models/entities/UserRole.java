@@ -19,9 +19,14 @@ import org.springframework.security.core.GrantedAuthority;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.jiniworld.demo.models.entities.User.UserBuilder;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
 @Entity
 @Table(name = "user_role", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_name"})})
@@ -42,6 +47,12 @@ public class UserRole extends BaseEntity implements Serializable, GrantedAuthori
 	public enum RoleType {
 		ROLE_ADMIN, ROLE_VIEW
 	}
+	
+	@Builder
+	public UserRole(User user, RoleType roleName) {
+		this.user = user;
+		this.roleName = roleName;
+	}	
 	
 	@JsonIgnore
 	@Override

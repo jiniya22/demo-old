@@ -9,10 +9,19 @@
 	<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
 	<form method="post" th:action="@{/join}">
 		<div>
-			<input type="text" name="username" class="form-control" placeholder="username" autocomplete="off" required/>
+			<input type="text" name="email" class="form-control" placeholder="이메일" autocomplete="off" required/>
+		</div>
+		<div>
+			<input type="password" name="password" class="form-control" placeholder="비밀번호" autocomplete="off" required/>
+		</div>
+		<div>
+			<input type="text" name="name" class="form-control" placeholder="이름" autocomplete="off" required/>
+		</div>
+		<div>
+			<input type="text" name="birthDate" class="form-control" placeholder="생년월일(yyMMdd)" autocomplete="off" required/>
 		</div>
 		<div style="margin-bottom: 50px;">
-			<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
+			<input type="text" name="phoneNumber" class="form-control" placeholder="전화번호(-생략)" autocomplete="off" required/>
 		</div>
 		<div>
 			<button type="button" class="btn btn-dark btn-large form-control" id="btn_join">Join</button>
@@ -24,3 +33,75 @@
 		<p>©2019 All Rights Reserved.</p>
 	</div>
 </section>
+
+<th:block layout:fragment="f-script">
+<script th:inline="javascript">
+/*<![CDATA[*/
+$(function() {
+	
+	var check_validation = function() {
+		var $email = $("input[name='email']"), $password = $("input[name='password']"), $name = $("input[name='name']"),
+					$birthDate = $("input[name='birthDate']"), $phoneNumber = $("input[name='phoneNumber']");
+		if ($email.val() == "") {
+			alert("이메일을 입력하세요");
+			$email.focus();
+			return false;
+		} else if ($password.val() == "") {
+			alert("비밀번호를 입력하세요");
+			$password.focus();
+			return false;
+		} else if ($name.val() == "") {
+			alert("이름을 입력하세요");
+			$name.focus();
+			return false;
+		} else if ($birthDate.val() == "") {
+			alert("생년월일을 입력하세요");
+			$birthDate.focus();
+			return false;
+		} else if ($phoneNumber.val() == "") {
+			$phoneNumber.focus();
+			alert("전화번호를 입력하세요");
+			return false;
+		}
+		return true;
+	}
+	
+	var fn_ajax_data = function(type, url, formData){
+		$("section div:eq(0)").append('<div id="d-spin" class="spinner-border">');
+		$.ajax({
+			type : type,
+			dataType : 'json',
+			contentType : "application/json",
+			data : JSON.stringify(formData),
+			url : url,
+			beforeSend : function(xhr){
+				xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+			},
+			success : function(res) {
+				$("#d-spin").remove();
+				if (res.success == true) {
+					$('.notifyjs-corner').empty();
+					$.notify((type == "put" ? "수정" : type == "delete" ? "삭제 " : "등록") + " 완료되었습니다.");
+					setTimeout(function() {window.location = document.referrer}, 800);						
+				} else {
+					$("#d-spin").hide();
+					$('.notifyjs-corner').empty();
+					$.notify("crud fail");
+				}
+			},
+			error : function(error) {
+				alert(error.errorMsg);
+			}
+		});
+	};
+	
+	$("#btn_join").on("click", function() {
+		var $form = $(this).closest("form");
+		if(!check_validation()) return;
+		var formData = $form.serializeObject();
+		fn_ajax_data("post", $form.attr("action"), formData);
+	});
+});
+/*]]>*/
+</script>
+</th:block>
