@@ -6,25 +6,27 @@
 	layout:decorator="cmm/layout_login">
 
 <section layout:fragment="f-content">
-	<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
-	<form method="post" th:action="@{/login}">
+	<div class="login_wrapper" style="margin: calc(50vh - 193px) auto 0px;">
+		<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
+		<form method="post" th:action="@{/login}">
+			<div>
+				<input type="text" name="email" class="form-control" placeholder="email" autocomplete="off" required/>
+			</div>
+			<div style="margin-bottom: 50px;">
+				<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
+			</div>
+			<div>
+				<button type="button" class="btn btn-info btn-large form-control" id="btn_login">Login</button>
+			</div>
+			<div>
+				<button type="button" class="btn btn-secondary btn-large form-control" id="btn_joinForm">Join</button>
+			</div>
+		</form>
+		<hr class="separator"/>
 		<div>
-			<input type="text" name="email" class="form-control" placeholder="email" autocomplete="off" required/>
+			<h1>DEMO</h1>
+			<p>©2019 All Rights Reserved.</p>
 		</div>
-		<div style="margin-bottom: 50px;">
-			<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
-		</div>
-		<div>
-			<button type="button" class="btn btn-info btn-large form-control" id="btn_login">Login</button>
-		</div>
-		<div>
-			<button type="button" class="btn btn-secondary btn-large form-control" id="btn_joinForm">Join</button>
-		</div>
-	</form>
-	<hr class="separator"/>
-	<div>
-		<h1>DEMO</h1>
-		<p>©2019 All Rights Reserved.</p>
 	</div>
 </section>
 

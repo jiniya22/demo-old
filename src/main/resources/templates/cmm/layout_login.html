@@ -30,7 +30,6 @@ body {
 }
 
 .login_wrapper {
-	margin: calc(50vh - 193px) auto 0px;
 	max-width: 350px;
 	position: relative;
 }
@@ -79,10 +78,13 @@ hr.separator {
 </head>
 
 <body>
-	<div class="login_wrapper">
-		<section layout:fragment="f-content"></section>		
-	</div>
+	<section layout:fragment="f-content"></section>		
 
 	<th:block th:insert="cmm/block :: f-footer"></th:block>
+	<script>
+	$("#btn_loginHome").on("click", function() {
+		location.href = "[[@{/login}]]";
+	});
+	</script>
 	<th:block layout:fragment="f-script"></th:block>
 </html>

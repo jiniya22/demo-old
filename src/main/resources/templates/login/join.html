@@ -5,32 +5,36 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="cmm/layout_login">
 
+<th:block layout:fragment="f-title">DEMO 회원가입</th:block>
+
 <section layout:fragment="f-content">
-	<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
-	<form method="post" th:action="@{/join}">
+	<div class="login_wrapper" style="margin: calc(50vh - 274px) auto 0px;">
+		<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
+		<form method="post" th:action="@{/join}">
+			<div>
+				<input type="text" name="email" class="form-control" placeholder="이메일" autocomplete="off" required/>
+			</div>
+			<div>
+				<input type="password" name="password" class="form-control" placeholder="비밀번호" autocomplete="off" required/>
+			</div>
+			<div>
+				<input type="text" name="name" class="form-control" placeholder="이름" autocomplete="off" required/>
+			</div>
+			<div>
+				<input type="text" name="birthDate" class="form-control" placeholder="생년월일(yyMMdd)" autocomplete="off" required/>
+			</div>
+			<div style="margin-bottom: 50px;">
+				<input type="text" name="phoneNumber" class="form-control" placeholder="전화번호(-생략)" autocomplete="off" required/>
+			</div>
+			<div>
+				<button type="button" class="btn btn-dark btn-large form-control" id="btn_join">Join</button>
+			</div>
+		</form>
+		<hr class="separator"/>
 		<div>
-			<input type="text" name="email" class="form-control" placeholder="이메일" autocomplete="off" required/>
+			<h1>DEMO</h1>
+			<p>©2019 All Rights Reserved.</p>
 		</div>
-		<div>
-			<input type="password" name="password" class="form-control" placeholder="비밀번호" autocomplete="off" required/>
-		</div>
-		<div>
-			<input type="text" name="name" class="form-control" placeholder="이름" autocomplete="off" required/>
-		</div>
-		<div>
-			<input type="text" name="birthDate" class="form-control" placeholder="생년월일(yyMMdd)" autocomplete="off" required/>
-		</div>
-		<div style="margin-bottom: 50px;">
-			<input type="text" name="phoneNumber" class="form-control" placeholder="전화번호(-생략)" autocomplete="off" required/>
-		</div>
-		<div>
-			<button type="button" class="btn btn-dark btn-large form-control" id="btn_join">Join</button>
-		</div>
-	</form>
-	<hr class="separator"/>
-	<div>
-		<h1>DEMO</h1>
-		<p>©2019 All Rights Reserved.</p>
 	</div>
 </section>
 
