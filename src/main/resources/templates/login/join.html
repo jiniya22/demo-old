@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko" 
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="cmm/layout_login">
 
 <th:block layout:fragment="f-title">DEMO 회원가입</th:block>
 
 <section layout:fragment="f-content">
-	<div class="login_wrapper" style="margin: calc(50vh - 274px) auto 0px;">
+	<div class="login_wrapper" style="margin: calc(50vh - 320px) auto 0px;">
 		<h1><img th:src="@{/static/img/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
 		<form method="post" th:action="@{/join}">
 			<div>
@@ -20,14 +19,27 @@
 			<div>
 				<input type="text" name="name" class="form-control" placeholder="이름" autocomplete="off" required/>
 			</div>
+			<div style="margin: 0;">
+				<div class="custom-control custom-radio custom-control-inline">
+			    <input type="radio" class="custom-control-input" id="sex-1" name="sex" value="1" checked>
+			    <label class="custom-control-label" for="sex-1">남</label>
+			  </div>
+			  <div class="custom-control custom-radio custom-control-inline">
+			    <input type="radio" class="custom-control-input" id="sex-2" name="sex" value="2">
+			    <label class="custom-control-label" for="sex-2">여</label>
+			  </div>
+			</div>
 			<div>
-				<input type="text" name="birthDate" class="form-control" placeholder="생년월일(yyMMdd)" autocomplete="off" required/>
+				<input type="text" name="birthDate" class="form-control" placeholder="생년월일(yyMMdd)" autocomplete="off"/>
 			</div>
 			<div style="margin-bottom: 50px;">
-				<input type="text" name="phoneNumber" class="form-control" placeholder="전화번호(-생략)" autocomplete="off" required/>
+				<input type="text" name="phoneNumber" class="form-control" placeholder="전화번호(-생략)" autocomplete="off"/>
 			</div>
 			<div>
-				<button type="button" class="btn btn-dark btn-large form-control" id="btn_join">Join</button>
+				<button type="submit" class="btn btn-dark btn-large form-control">Join</button>
+			</div>
+			<div>
+				<button type="button" class="btn btn-secondary btn-large form-control" id="btn_loginForm">Back</button>
 			</div>
 		</form>
 		<hr class="separator"/>
@@ -39,57 +51,35 @@
 </section>
 
 <th:block layout:fragment="f-script">
-<script th:inline="javascript">
-/*<![CDATA[*/
+<script>
 $(function() {
-	
-	var check_validation = function() {
-		var $email = $("input[name='email']"), $password = $("input[name='password']"), $name = $("input[name='name']"),
-					$birthDate = $("input[name='birthDate']"), $phoneNumber = $("input[name='phoneNumber']");
-		if ($email.val() == "") {
-			alert("이메일을 입력하세요");
-			$email.focus();
-			return false;
-		} else if ($password.val() == "") {
-			alert("비밀번호를 입력하세요");
-			$password.focus();
-			return false;
-		} else if ($name.val() == "") {
-			alert("이름을 입력하세요");
-			$name.focus();
-			return false;
-		} else if ($birthDate.val() == "") {
-			alert("생년월일을 입력하세요");
-			$birthDate.focus();
-			return false;
-		} else if ($phoneNumber.val() == "") {
-			$phoneNumber.focus();
-			alert("전화번호를 입력하세요");
-			return false;
-		}
-		return true;
-	}
-	
-	var fn_ajax_data = function(type, url, formData){
+		
+	$("form").on("submit", function(e) {
+		e.preventDefault();
+		var $form = $(this).closest("form");
+		var formData = $form.serializeObject();
+		
 		$("section div:eq(0)").append('<div id="d-spin" class="spinner-border">');
 		$.ajax({
-			type : type,
+			type : $form.attr("method"),
 			dataType : 'json',
 			contentType : "application/json",
 			data : JSON.stringify(formData),
-			url : url,
+			url : $form.attr("action"),
 			beforeSend : function(xhr){
 				xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
 			},
 			success : function(res) {
 				$("#d-spin").remove();
-				if (res.success == true) {
-					$('.notifyjs-corner').empty();
-					$.notify((type == "put" ? "수정" : type == "delete" ? "삭제 " : "등록") + " 완료되었습니다.");
+				if (res.duplicate) {
+					$.notify("중복된 이메일 입니다.");
+					$("input[name='email']").val("");
+					$("input[name='email']").focus();
+				} else if (res.success) {
+					$.notify("회원 가입 완료되었습니다.");
 					setTimeout(function() {window.location = document.referrer}, 800);						
 				} else {
 					$("#d-spin").hide();
-					$('.notifyjs-corner').empty();
 					$.notify("crud fail");
 				}
 			},
@@ -97,15 +87,13 @@ $(function() {
 				alert(error.errorMsg);
 			}
 		});
-	};
+		
+	});	
 	
-	$("#btn_join").on("click", function() {
-		var $form = $(this).closest("form");
-		if(!check_validation()) return;
-		var formData = $form.serializeObject();
-		fn_ajax_data("post", $form.attr("action"), formData);
+	$("#btn_loginForm").on("click", function() {
+		location.href = document.referrer;
 	});
+	
 });
-/*]]>*/
 </script>
 </th:block>

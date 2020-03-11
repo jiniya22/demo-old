@@ -58,18 +58,15 @@ public class UserService {
 				.sex(value.getSex()).build();
 		return userRepository.save(user);
 	}
-	
+		
 	@Transactional
+	private UserRole saveUserRole(User user) {
+		return userRoleRepository.save(UserRole.builder().user(user).roleName(RoleType.ROLE_VIEW).build());
+	}
+	
 	public User join(UserValue value) {
-		User user = userRepository.save(User.builder()
-				.type(value.getType())
-				.email(value.getEmail())
-				.birthDate(value.getBirthDate())
-				.name(value.getName())
-				.password(passwordEncoder.encode(value.getPassword()))
-				.phoneNumber(value.getPhoneNumber())
-				.sex(value.getSex()).build());
-		userRoleRepository.save(UserRole.builder().user(user).roleName(RoleType.ROLE_VIEW).build());
+		User user = save(value);
+		saveUserRole(user);
 		return user;
 	}
 	
@@ -99,5 +96,9 @@ public class UserService {
 
 	public List<User> findAll(Pageable pageable) {
 		return userRepository.findAllByDelOrderByIdDesc(false, pageable);
+	}
+
+	public Optional<User> findByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 }
