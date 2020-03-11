@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
 import me.jiniworld.demo.mapper.UserMapper;
 import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.models.entities.UserRole;
@@ -18,6 +18,7 @@ import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.repositories.UserRepository;
 import me.jiniworld.demo.repositories.UserRoleRepository;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
@@ -25,14 +26,6 @@ public class UserService {
 	private final UserRoleRepository userRoleRepository;
 	private final UserMapper userMapper;
 	private final PasswordEncoder passwordEncoder;
-	
-	@Autowired
-	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
-		this.userRoleRepository = userRoleRepository;
-		this.userMapper = userMapper;
-		this.passwordEncoder = passwordEncoder;
-	}
 	
 	public Optional<User> findById(Long id) {
 		return userRepository.findWithUserRolesById(id);
