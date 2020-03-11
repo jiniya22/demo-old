@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>me.jiniworld</groupId>
 	<artifactId>demo</artifactId>
-	<version>1.0.6-SNAPSHOT</version>
+	<version>1.0.7-SNAPSHOT</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
