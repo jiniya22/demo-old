@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,20 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
 import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.services.UserService;
 
 @RequestMapping(value = "/users", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequiredArgsConstructor
 @RestController
 public class UserController {
 	
 	private final UserService userService;
-	
-	@Autowired
-	public UserController(UserService userService) {
-		this.userService = userService;
-	}
 	
 	@GetMapping("/{id}")
 	public Map<String, Object> findById(@PathVariable("id") long id) {

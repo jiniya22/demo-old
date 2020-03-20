@@ -4,27 +4,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
 import me.jiniworld.demo.mapper.StoreMapper;
 import me.jiniworld.demo.models.entities.Store;
 import me.jiniworld.demo.models.values.StoreValue;
 import me.jiniworld.demo.repositories.StoreRepository;
 
+@RequiredArgsConstructor
 @Service
 public class StoreService {
 
 	private final StoreRepository storeRepository;
 	private final StoreMapper storeMapper;
-	
-	@Autowired
-	public StoreService(StoreRepository storeRepository, StoreMapper storeMapper) {
-		this.storeRepository = storeRepository;
-		this.storeMapper = storeMapper;
-	}
 	
 	public Optional<Store> findById(Long id) {
 		return storeRepository.findById(id);
