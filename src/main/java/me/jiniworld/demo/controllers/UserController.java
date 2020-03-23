@@ -26,22 +26,6 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	@GetMapping("/{id}")
-	public Map<String, Object> findById(@PathVariable("id") long id) {
-		Map<String, Object> response = new HashMap<>();
-		
-		Optional<User> oUser = userService.findById(id);
-		if(oUser.isPresent()) {
-			response.put("result", "SUCCESS");
-			response.put("user", oUser.get());
-		} else {
-			response.put("result", "FAIL");
-			response.put("reason", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-		}
-		
-		return response;
-	}
-	
 	@PostMapping("")
 	public Map<String, Object> save(@RequestBody UserValue value) {
 		Map<String, Object> response = new HashMap<>();
@@ -58,14 +42,29 @@ public class UserController {
 		return response;
 	}
 	
-	@PatchMapping("/{id}")
-	public Map<String, Object> patch(@PathVariable("id") User user, @RequestBody UserValue value) {
+	@GetMapping("/{id}")
+	public Map<String, Object> findById(@PathVariable("id") long id) {
 		Map<String, Object> response = new HashMap<>();
 		
-		if(user != null && !user.isDel()) {
-			userService.patch(user, value);
+		Optional<User> oUser = userService.findById(id);
+		if(oUser.isPresent()) {
 			response.put("result", "SUCCESS");
-			response.put("user", user);
+			response.put("user", oUser.get());
+		} else {
+			response.put("result", "FAIL");
+			response.put("reason", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
+		}
+		
+		return response;
+	}
+	
+	@PatchMapping("/{id}")
+	public Map<String, Object> patch(@PathVariable("id") long id, @RequestBody UserValue value) {
+		Map<String, Object> response = new HashMap<>();
+		
+		if(userService.patch(id, value) > 0) {
+			response.put("result", "SUCCESS");			
+			response.put("user", userService.findById(id));			
 		} else {
 			response.put("result", "FAIL");
 			response.put("reason", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");

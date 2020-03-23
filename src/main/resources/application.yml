@@ -4,7 +4,7 @@ spring:
   profiles:    active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://127.0.0.1:3306/jiniworld_test?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Seoul"
+    url: "jdbc:mysql://localhost/jiniworld_test?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC&tinyInt1isBit=false"
     username: test
     password: test   
     hikari:
@@ -16,12 +16,14 @@ spring:
       pool-name: pool-jiniworld
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     properties:
       hibernate:
         format_sql: true
-        show_sql: true
         hbm2ddl.auto: update
-    generate-ddl: false
     open-in-view: false
   jackson:
     serialization:
@@ -52,3 +54,5 @@ logging:
     console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(${LOG_LEVEL_PATTERN:-%5p}){green} %clr(${PID:- }){magenta} %clr(%-40.40logger{39}){cyan} %clr(: %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}){faint}'
   level:
     web: debug
+    org.hibernate.SQL: debug
+        

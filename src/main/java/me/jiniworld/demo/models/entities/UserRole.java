@@ -24,7 +24,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.jiniworld.demo.models.entities.User.UserBuilder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter

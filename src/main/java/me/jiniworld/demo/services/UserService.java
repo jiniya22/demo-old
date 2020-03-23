@@ -64,27 +64,34 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void patch(User user, UserValue value) {
-		if(StringUtils.isNotBlank(value.getType()))
-			user.setType(value.getType());
-		if(StringUtils.isNotBlank(value.getEmail()))
-			user.setEmail(value.getEmail());
-		if(StringUtils.isNotBlank(value.getBirthDate()))
-			user.setBirthDate(value.getBirthDate());
-		if(StringUtils.isNotBlank(value.getName()))
-			user.setName(value.getName());
-		if(StringUtils.isNotBlank(value.getPassword()))
-			user.setPassword(value.getPassword());
-		if(StringUtils.isNotBlank(value.getPhoneNumber()))
-			user.setPhoneNumber(value.getPhoneNumber());
-		if(StringUtils.isNotBlank(value.getSex()))
-			user.setSex(value.getSex());
+	public int patch(long id, UserValue value) {
+		Optional<User> oUser = userRepository.findWithUserRolesById(id);		
+		if(oUser.isPresent()) {
+			User user = oUser.get();
+			if(StringUtils.isNotBlank(value.getType()))
+				user.setType(value.getType());
+			if(StringUtils.isNotBlank(value.getEmail()))
+				user.setEmail(value.getEmail());
+			if(StringUtils.isNotBlank(value.getBirthDate()))
+				user.setBirthDate(value.getBirthDate());
+			if(StringUtils.isNotBlank(value.getName()))
+				user.setName(value.getName());
+			if(StringUtils.isNotBlank(value.getPassword()))
+				user.setPassword(value.getPassword());
+			if(StringUtils.isNotBlank(value.getPhoneNumber()))
+				user.setPhoneNumber(value.getPhoneNumber());
+			if(StringUtils.isNotBlank(value.getSex()))
+				user.setSex(value.getSex());			
+		} else {
+			return 0;
+		}
+		return 1;
 	}
 
 	@Transactional
 	public void delete(User user) {
-//		user.setDel(true);
-		userRepository.delete(user);
+		user.setDel(true);
+//		userRepository.delete(user);
 	}
 
 	public List<User> findAll(Pageable pageable) {
