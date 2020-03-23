@@ -1,4 +1,4 @@
-package me.jiniworld.demo.commons;
+package me.jiniworld.demo.configs;
 
 import javax.sql.DataSource;
 

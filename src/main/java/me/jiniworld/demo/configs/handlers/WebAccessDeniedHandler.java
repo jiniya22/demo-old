@@ -1,4 +1,4 @@
-package me.jiniworld.demo.commons.handlers;
+package me.jiniworld.demo.configs.handlers;
 
 import java.io.IOException;
 import java.util.Set;

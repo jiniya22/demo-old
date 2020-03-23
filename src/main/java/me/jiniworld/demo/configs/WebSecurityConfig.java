@@ -1,4 +1,4 @@
-package me.jiniworld.demo.commons;
+package me.jiniworld.demo.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import lombok.RequiredArgsConstructor;
-import me.jiniworld.demo.commons.handlers.WebAccessDeniedHandler;
+import me.jiniworld.demo.configs.handlers.WebAccessDeniedHandler;
 import me.jiniworld.demo.services.SecurityUserService;
 
 @RequiredArgsConstructor
