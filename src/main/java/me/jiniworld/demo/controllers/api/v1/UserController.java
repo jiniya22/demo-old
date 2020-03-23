@@ -1,10 +1,9 @@
-package me.jiniworld.demo.controllers;
+package me.jiniworld.demo.controllers.api.v1;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,7 +18,7 @@ import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.services.UserService;
 
-@RequestMapping(value = "/users", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "${demo.api}/users")
 @RequiredArgsConstructor
 @RestController
 public class UserController {

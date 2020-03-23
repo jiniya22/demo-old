@@ -55,4 +55,6 @@ logging:
   level:
     web: debug
     org.hibernate.SQL: debug
-        
+
+demo:
+  api: /api/v1
