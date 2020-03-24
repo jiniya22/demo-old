@@ -2,6 +2,8 @@ package me.jiniworld.demo.controllers.api.v1;
 
 import java.util.Optional;
 
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import me.jiniworld.demo.models.entities.User;
-import me.jiniworld.demo.models.response.BasicResponse;
-import me.jiniworld.demo.models.response.CommonResponse;
 import me.jiniworld.demo.models.values.UserValue;
+import me.jiniworld.demo.responses.BasicResponse;
+import me.jiniworld.demo.responses.CommonResponse;
+import me.jiniworld.demo.responses.ErrorResponse;
 import me.jiniworld.demo.services.UserService;
 
 @RequestMapping(value = "${demo.api}/users")
@@ -27,73 +30,43 @@ public class UserController {
 	private final UserService userService;
 	
 	@PostMapping("")
-	public CommonResponse<User> save(@RequestBody UserValue value) {
-		CommonResponse<User> response = new CommonResponse<>("FAIL", "회원가입 실패");
-		
+	public ResponseEntity<? extends BasicResponse> save(@RequestBody UserValue value) {
 		User user = userService.save(value);
-		if(user != null) {
-			response.setResult("SUCCESS");
-			response.setReason("");
-			response.setData(user);
+		if(user == null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ErrorResponse("Internal server Error"));
 		}
-		
-		return response;
+		// FIXME
+		return ResponseEntity.created(ControllerLinkBuilder.linkTo(UserController.class).slash(user.getId()).toUri())
+				.body(new CommonResponse<User>(user));
 	}
 	
 	@GetMapping("/{id}")
-	public CommonResponse<User> findById(@PathVariable("id") long id) {
-		CommonResponse<User> response = new CommonResponse<>("FAIL", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-		
-		userService.findById(id).ifPresent(user -> {
-			response.setResult("SUCCESS");
-			response.setReason("");
-			response.setData(user);
-		});
-		
-		return response;
-	}
-	
-	@GetMapping("/{id}/2")
-	public ResponseEntity<CommonResponse<User>> findById2(@PathVariable("id") long id) {
-		CommonResponse<User> body = new CommonResponse<>("FAIL", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-		
+	public ResponseEntity<? extends BasicResponse> select(@PathVariable("id") long id) {
 		Optional<User> oUser = userService.findById(id);
-		if(oUser.isPresent()) {
-			body.setResult("SUCCESS");
-			body.setReason("");
-			body.setData(oUser.get());
-		} else {
-			return ResponseEntity.badRequest().body(body);
-		}
-		return ResponseEntity.ok().body(body);
+		if(!oUser.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+					.body(new ErrorResponse("User is Not Found."));
+		}		
+		return ResponseEntity.ok().body(new CommonResponse<User>(oUser.get()));
 	}
 	
 	@PatchMapping("/{id}")
-	public CommonResponse<User> patch(@PathVariable("id") long id, @RequestBody UserValue value) {
-		CommonResponse<User> response = new CommonResponse<>("FAIL", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-		
-		if(userService.patch(id, value) > 0) {
-			response.setResult("SUCCESS");
-			response.setReason("");
-			userService.findById(id).ifPresent(user -> {
-				response.setData(user);				
-			});
-		} 
-		
-		return response;
+	public ResponseEntity<? extends BasicResponse> patch(@PathVariable("id") long id, @RequestBody UserValue value) {
+		if(!userService.patch(id, value)) {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+					.body(new ErrorResponse("User is Not Found."));
+		}
+		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping("/{id}")
-	public BasicResponse delete(@PathVariable("id") User user) {
-		BasicResponse response = new BasicResponse("FAIL", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-		
-		if(user != null && !user.isDel()) {
-			userService.delete(user);
-			response.setResult("SUCCESS");
-			response.setReason("");
-		} 
-		
-		return response;
+	public ResponseEntity<? extends BasicResponse> delete(@PathVariable("id") long id) {
+		if(!userService.delete(id)) {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+					.body(new ErrorResponse("User is Not Found."));
+		}
+		return ResponseEntity.noContent().build();
 	}
 	
 }

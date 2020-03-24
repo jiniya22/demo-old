@@ -41,15 +41,15 @@ public class UserService {
 	
 	@Transactional
 	public User save(UserValue value) {
-		User user = User.builder()
+		User user = userRepository.save(User.builder()
 				.type(value.getType())
 				.email(value.getEmail())
 				.birthDate(value.getBirthDate())
 				.name(value.getName())
 				.password(passwordEncoder.encode(value.getPassword()))
 				.phoneNumber(value.getPhoneNumber())
-				.sex(value.getSex()).build();
-		return userRepository.save(user);
+				.sex(value.getSex()).build());
+		return user;
 	}
 		
 	@Transactional
@@ -64,7 +64,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public int patch(long id, UserValue value) {
+	public boolean patch(long id, UserValue value) {
 		Optional<User> oUser = userRepository.findWithUserRolesById(id);		
 		if(oUser.isPresent()) {
 			User user = oUser.get();
@@ -83,15 +83,20 @@ public class UserService {
 			if(StringUtils.isNotBlank(value.getSex()))
 				user.setSex(value.getSex());			
 		} else {
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	}
 
 	@Transactional
-	public void delete(User user) {
+	public boolean delete(long id) {		
+		Optional<User> oUser = userRepository.findById(id);
+		if(!oUser.isPresent())
+			return false;
+		
+		User user = oUser.get();
 		user.setDel(true);
-//		userRepository.delete(user);
+		return true;
 	}
 
 	public List<User> findAll(Pageable pageable) {
