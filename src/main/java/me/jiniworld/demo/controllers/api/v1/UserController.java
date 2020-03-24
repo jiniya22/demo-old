@@ -1,9 +1,8 @@
 package me.jiniworld.demo.controllers.api.v1;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import me.jiniworld.demo.models.entities.User;
+import me.jiniworld.demo.models.response.BasicResponse;
+import me.jiniworld.demo.models.response.CommonResponse;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.services.UserService;
 
@@ -26,63 +27,71 @@ public class UserController {
 	private final UserService userService;
 	
 	@PostMapping("")
-	public Map<String, Object> save(@RequestBody UserValue value) {
-		Map<String, Object> response = new HashMap<>();
+	public CommonResponse<User> save(@RequestBody UserValue value) {
+		CommonResponse<User> response = new CommonResponse<>("FAIL", "회원가입 실패");
 		
 		User user = userService.save(value);
 		if(user != null) {
-			response.put("result", "SUCCESS");
-			response.put("user", user);
-		} else {
-			response.put("result", "FAIL");
-			response.put("reason", "회원 가입 실패");
+			response.setResult("SUCCESS");
+			response.setReason("");
+			response.setData(user);
 		}
 		
 		return response;
 	}
 	
 	@GetMapping("/{id}")
-	public Map<String, Object> findById(@PathVariable("id") long id) {
-		Map<String, Object> response = new HashMap<>();
+	public CommonResponse<User> findById(@PathVariable("id") long id) {
+		CommonResponse<User> response = new CommonResponse<>("FAIL", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
 		
-		Optional<User> oUser = userService.findById(id);
-		if(oUser.isPresent()) {
-			response.put("result", "SUCCESS");
-			response.put("user", oUser.get());
-		} else {
-			response.put("result", "FAIL");
-			response.put("reason", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-		}
+		userService.findById(id).ifPresent(user -> {
+			response.setResult("SUCCESS");
+			response.setReason("");
+			response.setData(user);
+		});
 		
 		return response;
 	}
 	
+	@GetMapping("/{id}/2")
+	public ResponseEntity<CommonResponse<User>> findById2(@PathVariable("id") long id) {
+		CommonResponse<User> body = new CommonResponse<>("FAIL", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
+		
+		Optional<User> oUser = userService.findById(id);
+		if(oUser.isPresent()) {
+			body.setResult("SUCCESS");
+			body.setReason("");
+			body.setData(oUser.get());
+		} else {
+			return ResponseEntity.badRequest().body(body);
+		}
+		return ResponseEntity.ok().body(body);
+	}
+	
 	@PatchMapping("/{id}")
-	public Map<String, Object> patch(@PathVariable("id") long id, @RequestBody UserValue value) {
-		Map<String, Object> response = new HashMap<>();
+	public CommonResponse<User> patch(@PathVariable("id") long id, @RequestBody UserValue value) {
+		CommonResponse<User> response = new CommonResponse<>("FAIL", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
 		
 		if(userService.patch(id, value) > 0) {
-			response.put("result", "SUCCESS");			
-			response.put("user", userService.findById(id));			
-		} else {
-			response.put("result", "FAIL");
-			response.put("reason", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-		}
+			response.setResult("SUCCESS");
+			response.setReason("");
+			userService.findById(id).ifPresent(user -> {
+				response.setData(user);				
+			});
+		} 
 		
 		return response;
 	}
 	
 	@DeleteMapping("/{id}")
-	public Map<String, Object> delete(@PathVariable("id") User user) {
-		Map<String, Object> response = new HashMap<>();
+	public BasicResponse delete(@PathVariable("id") User user) {
+		BasicResponse response = new BasicResponse("FAIL", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
 		
 		if(user != null && !user.isDel()) {
 			userService.delete(user);
-			response.put("result", "SUCCESS");
-		} else {
-			response.put("result", "FAIL");
-			response.put("reason", "일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요.");
-		}
+			response.setResult("SUCCESS");
+			response.setReason("");
+		} 
 		
 		return response;
 	}
