@@ -2,7 +2,6 @@ package me.jiniworld.demo.controllers.api.v1;
 
 import java.util.Optional;
 
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,9 +35,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(new ErrorResponse("Internal server Error"));
 		}
-		// FIXME
-		return ResponseEntity.created(ControllerLinkBuilder.linkTo(UserController.class).slash(user.getId()).toUri())
-				.body(new CommonResponse<User>(user));
+		return ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/{id}")
