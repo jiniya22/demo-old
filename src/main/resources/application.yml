@@ -6,7 +6,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: "jdbc:mysql://localhost/jiniworld_test?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC&tinyInt1isBit=false"
     username: test
-    password: test   
+    password: test
     hikari:
       auto-commit: false
       connection-test-query: SELECT 1
@@ -16,13 +16,12 @@ spring:
       pool-name: pool-jiniworld
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     properties:
       hibernate:
-        format_sql: true
+        format-sql: true
+        naming:
+          physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+          implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         hbm2ddl.auto: update
     open-in-view: false
   jackson:
