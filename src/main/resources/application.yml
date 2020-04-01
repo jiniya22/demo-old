@@ -1,13 +1,14 @@
 spring:
   application: 
     name: demo
-  profiles:    active: local
+  profiles:
+    active: local
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost/jiniworld_test?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC&tinyInt1isBit=false"
-    username: test
-    password: test
     hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: "jdbc:mysql://localhost/jiniworld_test?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC&tinyInt1isBit=false"
+      username: test
+      password: test
       auto-commit: false
       connection-test-query: SELECT 1
       minimum-idle: 10
