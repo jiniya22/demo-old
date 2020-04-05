@@ -39,7 +39,7 @@ public class UserService {
 		return userMapper.findById2(id);
 	}
 	
-	@Transactional
+	@Transactional(transactionManager="transactionManager")
 	public User save(UserValue value) {
 		User user = userRepository.save(User.builder()
 				.type(value.getType())
