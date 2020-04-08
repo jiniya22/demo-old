@@ -34,7 +34,7 @@ public class User extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -563329217866858622L;
 	
 	@ColumnDefault(value = "0")
-	@Column(nullable = false, length = 1)
+	@Column(nullable = false, length = 1, columnDefinition = "CHAR(1)")
 	private String type;
 	
 	@Column(nullable = false, unique = true, length = 100)
@@ -44,7 +44,7 @@ public class User extends BaseEntity implements Serializable {
 	private String name;
 	
 	@ColumnDefault(value = "1")
-	@Column(nullable = false, length = 1)
+	@Column(nullable = false, length = 1, columnDefinition = "CHAR(1)")
 	private String sex;
 	
 	@Column(nullable = false, length = 6)
