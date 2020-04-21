@@ -6,7 +6,7 @@
 - Java 8
 - Spring Boot 2.1.8.RELEASE
 - Maven
-- MySQL 5.7
+- MySQL 8.0.17
 
 <br />
 
@@ -22,3 +22,4 @@
 1. [AccessDeniedHandler 구현클래스로 인증&인가 Exception 핸들링](https://blog.jiniworld.me/53)
 1. [JDBC 기반 Spring Security 인증&인가](https://blog.jiniworld.me/59)
 1. [회원가입 화면 만들기](https://blog.jiniworld.me/63)
+1. [REST API Versioning](https://blog.jiniworld.me/67)

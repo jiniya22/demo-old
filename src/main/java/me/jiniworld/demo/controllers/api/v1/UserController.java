@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import me.jiniworld.demo.models.entities.User;
+import me.jiniworld.demo.models.responses.BasicResponse;
+import me.jiniworld.demo.models.responses.CommonResponse;
+import me.jiniworld.demo.models.responses.ErrorResponse;
 import me.jiniworld.demo.models.values.UserValue;
-import me.jiniworld.demo.responses.BasicResponse;
-import me.jiniworld.demo.responses.CommonResponse;
-import me.jiniworld.demo.responses.ErrorResponse;
 import me.jiniworld.demo.services.UserService;
 
 @RequestMapping(value = "${demo.api}/users")

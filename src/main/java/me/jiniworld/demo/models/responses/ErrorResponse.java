@@ -1,4 +1,4 @@
-package me.jiniworld.demo.responses;
+package me.jiniworld.demo.models.responses;
 
 import lombok.Getter;
 import lombok.Setter;
