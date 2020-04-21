@@ -42,8 +42,8 @@ public class UserController {
 	public ResponseEntity<? extends BasicResponse> select(@PathVariable("id") long id) {
 		Optional<User> oUser = userService.findById(id);
 		if(!oUser.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ErrorResponse("User is Not Found."));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(new ErrorResponse("User is Not Found"));
 		}		
 		return ResponseEntity.ok().body(new CommonResponse<User>(oUser.get()));
 	}
@@ -51,8 +51,8 @@ public class UserController {
 	@PatchMapping("/{id}")
 	public ResponseEntity<? extends BasicResponse> patch(@PathVariable("id") long id, @RequestBody UserValue value) {
 		if(!userService.patch(id, value)) {
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ErrorResponse("User is Not Found."));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(new ErrorResponse("User is Not Found"));
 		}
 		return ResponseEntity.noContent().build();
 	}
@@ -60,8 +60,8 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<? extends BasicResponse> delete(@PathVariable("id") long id) {
 		if(!userService.delete(id)) {
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ErrorResponse("User is Not Found."));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(new ErrorResponse("User is Not Found"));
 		}
 		return ResponseEntity.noContent().build();
 	}

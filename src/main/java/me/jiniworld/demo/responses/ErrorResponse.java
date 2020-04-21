@@ -10,7 +10,7 @@ public class ErrorResponse extends BasicResponse {
 	
 	public ErrorResponse(String errorMessage) {
 		this.errorMessage = errorMessage;
-		this.errorCode = "501";
+		this.errorCode = "404";
 	}
 	public ErrorResponse(String errorMessage, String errorCode) {
 		this.errorMessage = errorMessage;
