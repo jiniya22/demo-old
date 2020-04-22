@@ -33,7 +33,7 @@ public class UserController {
 		User user = userService.save(value);
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new ErrorResponse("Internal server Error"));
+					.body(new ErrorResponse("회원 가입 실패"));
 		}
 		return ResponseEntity.noContent().build();
 	}
@@ -43,7 +43,7 @@ public class UserController {
 		Optional<User> oUser = userService.findById(id);
 		if(!oUser.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(new ErrorResponse("User is Not Found"));
+					.body(new ErrorResponse("일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요."));
 		}		
 		return ResponseEntity.ok().body(new CommonResponse<User>(oUser.get()));
 	}
@@ -52,7 +52,7 @@ public class UserController {
 	public ResponseEntity<? extends BasicResponse> patch(@PathVariable("id") long id, @RequestBody UserValue value) {
 		if(!userService.patch(id, value)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(new ErrorResponse("User is Not Found"));
+					.body(new ErrorResponse("일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요."));
 		}
 		return ResponseEntity.noContent().build();
 	}
@@ -61,7 +61,7 @@ public class UserController {
 	public ResponseEntity<? extends BasicResponse> delete(@PathVariable("id") long id) {
 		if(!userService.delete(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(new ErrorResponse("User is Not Found"));
+					.body(new ErrorResponse("일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요."));
 		}
 		return ResponseEntity.noContent().build();
 	}
