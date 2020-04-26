@@ -1,0 +1,12 @@
+demo:
+  api: /api/v1
+  test:
+    userId: demo123
+    password: "demo123!"
+    sites:
+    - demo.jiniworld.me
+    - api.jiniworld.me
+    option:
+      admin: true
+      view: false
+    

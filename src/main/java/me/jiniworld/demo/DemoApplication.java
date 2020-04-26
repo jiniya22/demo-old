@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication {
 
 	public static void main(String[] args) {
+		System.setProperty("spring.config.location", "classpath:/application.yml,classpath:/demo.yml");
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
