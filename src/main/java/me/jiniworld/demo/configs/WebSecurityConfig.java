@@ -67,18 +67,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	static class CsrfRequireMatcher implements RequestMatcher {
-	    private static final Pattern ALLOWED_METHODS = Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$");
-
-	    @Override
+	    
+		@Override
 	    public boolean matches(HttpServletRequest request) {
-	        if (ALLOWED_METHODS.matcher(request.getMethod()).matches()) return false;
+	        if (Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$").matcher(request.getMethod()).matches())
+	        	return false;
 	        
-	        // POST, PUT, DELETE methods: Referer가 swagger인 경우 CSRF 요구 x
 	        final String referer = request.getHeader("Referer");
 	        if (referer != null && referer.contains("/swagger-ui")) {
 	            return false;
 	        }
-	        return true;	// CSRF 필요
+	        return true;
 	    }
 	}
 }
