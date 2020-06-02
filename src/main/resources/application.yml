@@ -56,8 +56,9 @@ logging:
     web: debug
 #    org.hibernate.SQL: debug
 springdoc:
+  version: '@project.version@'
   api-docs:
-    path: /api-docs
+    path: /v3/api-docs
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   swagger-ui:

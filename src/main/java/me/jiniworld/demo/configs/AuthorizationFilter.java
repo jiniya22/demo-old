@@ -21,7 +21,7 @@ public class AuthorizationFilter implements Filter {
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTION, PATCH");
 		res.setHeader("Access-Control-Max-Age", "3600");
-		res.setHeader("Access-Control-Allow-Headers", "x-requested-with, origin, Content-Type, Accept");
+		res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type, Accept");
         chain.doFilter(request, response);
 	}
 
