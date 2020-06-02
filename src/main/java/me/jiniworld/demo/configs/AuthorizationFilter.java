@@ -19,9 +19,9 @@ public class AuthorizationFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
 		res.setHeader("Access-Control-Allow-Origin", "*");
-		res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTION");
+		res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTION, PATCH");
 		res.setHeader("Access-Control-Max-Age", "3600");
-		res.setHeader("Access-Control-Allow-Headers", "x-requested-with, origin, content-type, accept");
+		res.setHeader("Access-Control-Allow-Headers", "x-requested-with, origin, Content-Type, Accept");
         chain.doFilter(request, response);
 	}
 
