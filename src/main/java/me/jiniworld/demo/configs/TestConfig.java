@@ -13,7 +13,6 @@ import lombok.Setter;
 public class TestConfig {
 	
 	private String userId;
-	private String name;
 	private String password;
 	private List<String> sites;
 	private Option option;
@@ -26,7 +25,7 @@ public class TestConfig {
 		@Override
 		public String toString() {
 			StringBuilder builder = new StringBuilder();
-			builder.append("[admin=").append(admin).append(", view=").append(view).append("]");
+			builder.append("Option [admin=").append(admin).append(", view=").append(view).append("]");
 			return builder.toString();
 		}
 		
@@ -35,8 +34,8 @@ public class TestConfig {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("TestConfig [userId=").append(userId).append(", name=").append(name).append(", password=")
-				.append(password).append(", sites=").append(sites).append(", option=").append(option).append("]");
+		builder.append("TestConfig [userId=").append(userId).append(", password=").append(password)
+		.append(", sites=").append(sites).append(", option=").append(option).append("]");
 		return builder.toString();
 	}
 	
