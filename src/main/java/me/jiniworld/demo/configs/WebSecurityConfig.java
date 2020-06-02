@@ -67,10 +67,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	static class CsrfRequireMatcher implements RequestMatcher {
+	    private static final Pattern ALLOWED_METHODS = Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$");
 	    
-		@Override
+	    @Override
 	    public boolean matches(HttpServletRequest request) {
-	        if (Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$").matcher(request.getMethod()).matches())
+	        if (ALLOWED_METHODS.matcher(request.getMethod()).matches())
 	        	return false;
 	        
 	        final String referer = request.getHeader("Referer");
