@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DEMO</title>
+<title>DEMO페이지</title>
 </head>
 <body>
 <script th:inline="javascript">
 window.onload = function(){
 /*<![CDATA[*/
-	var nextPage = [[@{__${nextPage}__}]], msg = [[${msg}]];
+	var nextPage = [[@{__${nextPage}__}]], msg = "[(${msg})]";
 	if(nextPage) {
 		alert(msg);
 		location.href = nextPage;

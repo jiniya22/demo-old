@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/", "/login", "/join", "/api/v1/**", "/test/**").permitAll()
+			.antMatchers("/", "/login", "/join", "/api/v1/**", "/test/**", "/err/denied-page").permitAll()
 			.antMatchers("/v/users").hasRole("ADMIN")
 			.antMatchers("/v", "/v/**", "/swagger-ui.html").hasRole("VIEW")
 			.anyRequest().authenticated()
