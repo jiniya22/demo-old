@@ -57,7 +57,7 @@ nav#nav_area > button {
 }
 
 nav#nav_area > button span {
-	width: 1em; height: auto;	
+	width: 1em; height: 1em;	
 }
 
 nav .navbar-nav li {
