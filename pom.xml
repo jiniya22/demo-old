@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>me.jiniworld</groupId>
 	<artifactId>demo</artifactId>
-	<version>1.0.10</version>
+	<version>1.0.11</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -101,11 +101,6 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.4.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-security</artifactId>
 			<version>1.4.1</version>
 		</dependency>
 		

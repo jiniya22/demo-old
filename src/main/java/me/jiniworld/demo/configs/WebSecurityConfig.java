@@ -1,9 +1,5 @@
 package me.jiniworld.demo.configs;
 
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 import me.jiniworld.demo.configs.handlers.WebAccessDeniedHandler;
@@ -49,7 +44,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.authenticationProvider(authenticationProvider())
 		.csrf()
-			.requireCsrfProtectionMatcher(new CsrfRequireMatcher())
 			.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 	
@@ -66,19 +60,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 	
-	static class CsrfRequireMatcher implements RequestMatcher {
-	    private static final Pattern ALLOWED_METHODS = Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$");
-	    
-	    @Override
-	    public boolean matches(HttpServletRequest request) {
-	        if (ALLOWED_METHODS.matcher(request.getMethod()).matches())
-	        	return false;
-	        
-	        final String referer = request.getHeader("Referer");
-	        if (referer != null && referer.contains("/swagger-ui")) {
-	            return false;
-	        }
-	        return true;
-	    }
-	}
 }
