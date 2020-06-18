@@ -24,3 +24,4 @@
 1. [회원가입 화면 만들기](https://blog.jiniworld.me/63)
 1. [REST API Versioning](https://blog.jiniworld.me/67)
 1. [Spring Boot REST API에 ResponseEntity 적용하기](https://blog.jiniworld.me/71)
+1. [OpenAPI 3.0를 이용한 REST API 문서 만들기 with Swagger(https://blog.jiniworld.me/83)
