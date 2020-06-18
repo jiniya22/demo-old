@@ -14,15 +14,16 @@ import io.swagger.v3.oas.models.info.License;
 public class OpenApiConfig {
 
 	@Bean
-	public OpenAPI customOpenAPI(@Value("${springdoc.version}") String appVersion) {
+	public OpenAPI openAPI(@Value("${springdoc.version}") String appVersion) {
 		Info info = new Info().title("Demo API").version(appVersion)
 				.description("Spring Boot를 이용한 Demo 웹 애플리케이션 API입니다.")
 				.termsOfService("http://swagger.io/terms/")
-				.contact(new Contact().name("jini").url("https://blog.jiniworld.me/").email("yeonjini2222@gmail.com"))
+				.contact(new Contact().name("jini").url("https://blog.jiniworld.me/").email("jini@jiniworld.me"))
 				.license(new License().name("Apache License Version 2.0").url("http://www.apache.org/licenses/LICENSE-2.0"));
 		
 		return new OpenAPI()
 				.components(new Components())
 				.info(info);
 	}
+	
 }
