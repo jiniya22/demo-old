@@ -49,8 +49,9 @@ server:
   servlet:
     context-path: /
   tomcat:
-    remote-ip-header: x-forwarded-for
-    protocol-header: x-forwarded-proto
+    basedir: .
+    remote-ip-header: X-Forwarded-For
+    protocol-header: X-Forwarded-Proto
     accesslog:
       enabled: true
       directory: logs
