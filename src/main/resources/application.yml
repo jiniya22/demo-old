@@ -55,7 +55,7 @@ server:
     accesslog:
       enabled: true
       directory: logs
-      pattern: "%{X-Forwarded-For}i(%h) %l %u %t &quot;%r&quot; %s %b"
+      pattern: "%{X-Forwarded-For}i(%h) %l %u %t \"%r\" %s %b"
   use-forward-headers: true
 logging:
   file: logs/demo.log
