@@ -53,6 +53,7 @@ server:
     protocol-header: x-forwarded-proto
     accesslog:
       enabled: true
+      directory: logs
       pattern: "%{X-Forwarded-For}i(%h) %l %u %t &quot;%r&quot; %s %b"
   use-forward-headers: true
 logging:
