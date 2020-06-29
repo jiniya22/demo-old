@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>me.jiniworld</groupId>
 	<artifactId>demo</artifactId>
-	<version>1.0.10</version>
+	<version>1.0.11</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -21,6 +21,24 @@
 		<maven.test.skip>true</maven.test.skip>
 		<springdoc.openapi.version>1.4.1</springdoc.openapi.version>
 	</properties>
+	
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<env>local</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<env>prod</env>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -97,6 +115,20 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>profile/**/**</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources/profile/${env}</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

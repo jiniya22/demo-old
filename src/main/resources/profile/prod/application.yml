@@ -2,7 +2,7 @@ spring:
   application: 
     name: demo
   profiles:
-    active: local
+    active: prod
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -66,13 +66,12 @@ logging:
     web: debug
 #    org.hibernate.SQL: debug
 springdoc:
-  version: '@project.version@'
   api-docs:
     path: /api-docs
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   swagger-ui:
-    operations-sorter: method
+    operations-sorter: alpha
     tags-sorter: alpha
     path: /swagger-ui.html
     disable-swagger-default-url: true

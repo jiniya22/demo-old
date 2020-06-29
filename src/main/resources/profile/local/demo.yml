@@ -1,0 +1,5 @@
+demo:
+  api: /api/v1
+  url: 'http://localhost:${server.port}'
+  version: '@project.version@'
+    

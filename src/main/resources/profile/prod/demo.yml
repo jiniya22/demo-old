@@ -1,0 +1,5 @@
+demo:
+  api: /api/v1
+  url: http://demo.jiniworld.me
+  version: '@project.version@'
+    
