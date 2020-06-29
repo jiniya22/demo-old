@@ -52,13 +52,8 @@ server:
     basedir: .
     remote-ip-header: X-Forwarded-For
     protocol-header: X-Forwarded-Proto
-    accesslog:
-      enabled: true
-      directory: logs
-      pattern: "%{X-Forwarded-For}i(%h) %l %u %t \"%r\" %s %b"
   use-forward-headers: true
 logging:
-  file: logs/demo.log
   exception-conversion-word: '%wEx'
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(${LOG_LEVEL_PATTERN:-%5p}){green} %clr([%22thread]){magenta} %clr(%-40.40logger{39}){cyan} %clr(: %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}){faint}'
