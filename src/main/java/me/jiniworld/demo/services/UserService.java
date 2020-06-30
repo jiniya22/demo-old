@@ -77,7 +77,7 @@ public class UserService {
 			if(StringUtils.isNotBlank(value.getName()))
 				user.setName(value.getName());
 			if(StringUtils.isNotBlank(value.getPassword()))
-				user.setPassword(value.getPassword());
+				user.setPassword(passwordEncoder.encode(value.getPassword()));
 			if(StringUtils.isNotBlank(value.getPhoneNumber()))
 				user.setPhoneNumber(value.getPhoneNumber());
 			if(StringUtils.isNotBlank(value.getSex()))

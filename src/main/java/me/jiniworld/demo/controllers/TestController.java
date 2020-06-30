@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "test")
 @RequestMapping(value = "/test")
 @RequiredArgsConstructor
 @RestController
@@ -20,8 +24,9 @@ public class TestController {
 	
 	private final PasswordEncoder passwordEncoder;
 	
+	@Operation(summary = "BCrypt 해쉬함수로 암호화")
 	@GetMapping(value = "/encode/{password}", produces = "text/plain")
-	public String selectStore(@PathVariable("password") String password) {
+	public String selectStore(@Parameter(description = "암호화할 문자열") @PathVariable("password") String password) {
 		return passwordEncoder.encode(password);
 	}
 	
