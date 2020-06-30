@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import me.jiniworld.demo.configs.TestConfig;
 
 @RequestMapping(value = "/test")
 @RequiredArgsConstructor
@@ -21,18 +19,10 @@ import me.jiniworld.demo.configs.TestConfig;
 public class TestController {
 	
 	private final PasswordEncoder passwordEncoder;
-	private final TestConfig testConfig;
-	private String demoApi;
 	
-
 	@GetMapping(value = "/encode/{password}", produces = "text/plain")
 	public String selectStore(@PathVariable("password") String password) {
 		return passwordEncoder.encode(password);
-	}
-	
-	@GetMapping(value="/config", produces = "text/plain")
-	public Object testConfig() {
-		return String.format("%s\n%s", demoApi, testConfig);
 	}
 	
 	@GetMapping(value = "/tttt")
@@ -53,8 +43,4 @@ public class TestController {
 		return res;
 	}
 	
-	@Value("${demo.api}")
-    public void setKEY(String demoApi) {
-       this.demoApi = demoApi;
-    }
 }
