@@ -28,32 +28,36 @@ import me.jiniworld.demo.models.responses.CommonResponse;
 import me.jiniworld.demo.models.responses.ErrorResponse;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.services.UserService;
+import me.jiniworld.demo.utils.DemoApiResponses;
 
 @Tag(name = "user")
 @RequestMapping(value = "${demo.api}/users")
+@DemoApiResponses
 @RequiredArgsConstructor
 @RestController
 public class UserController {
 	
 	private final UserService userService;
 	
-	@Operation(summary = "회원 가입")
 	@PostMapping("")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "리소스 생성 성공", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = Void.class)))}),
+			@ApiResponse(responseCode = "500", description = "내부 서버 오류", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = ErrorResponse.class)))})
+	})
+	@Operation(summary = "회원 가입")
 	public ResponseEntity<? extends BasicResponse> save(@RequestBody UserValue value) {
 		User user = userService.save(value);
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new ErrorResponse("회원 가입 실패"));
+					.body(new ErrorResponse("회원 가입 실패", "500"));
 		}
 		return ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/{id}")
-	@ApiResponses({
-        @ApiResponse(responseCode = "200", description = "조회 성공", 
-        		content = {@Content(array = @ArraySchema(schema = @Schema(implementation = User.class)))}),
-        @ApiResponse(responseCode = "404", description = "존재하지 않는 회원 입니다.")
-    })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "성공", content = {@Content(array = @ArraySchema(schema = @Schema(implementation = CommonResponse.class)))})
+	})
 	@Operation(summary = "회원 조회")
 	public ResponseEntity<? extends BasicResponse> select(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id) {
@@ -66,10 +70,6 @@ public class UserController {
 	}
 	
 	@PatchMapping("/{id}")
-	@ApiResponses({
-        @ApiResponse(responseCode = "204", description = "수정 완료"),
-        @ApiResponse(responseCode = "404", description = "존재하지 않는 회원 입니다.")
-    })
 	@Operation(summary = "회원 수정")
 	public ResponseEntity<? extends BasicResponse> patch(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id, @RequestBody UserValue value) {
@@ -81,10 +81,6 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@ApiResponses({
-        @ApiResponse(responseCode = "204", description = "삭제 완료"),
-        @ApiResponse(responseCode = "404", description = "존재하지 않는 회원 입니다.")
-    })
 	@Operation(summary = "회원 삭제")
 	public ResponseEntity<? extends BasicResponse> delete(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id) {
@@ -94,5 +90,6 @@ public class UserController {
 		}
 		return ResponseEntity.noContent().build();
 	}
+	
 	
 }
