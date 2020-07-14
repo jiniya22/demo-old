@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/static/**");
+		web.ignoring().antMatchers("/static/**", "/api-docs", "/api-docs/**");
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/", "/login", "/join", "/api/v1/**", "/test/**").permitAll()
 			.antMatchers("/v/users").hasRole("ADMIN")
 			.antMatchers("/v", "/v/**").hasRole("VIEW")
-			.antMatchers("/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**").hasRole("VIEW")
+			.antMatchers("/swagger-ui.html", "/swagger-ui/**").hasRole("VIEW")
 			.anyRequest().authenticated()
 		.and()
 			.formLogin().loginPage("/login").defaultSuccessUrl("/v", true)
