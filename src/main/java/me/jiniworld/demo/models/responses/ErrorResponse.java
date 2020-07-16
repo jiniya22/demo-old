@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(description = "에러 응답")
+@Schema(description = "에러 Response")
 @Getter @Setter
 public class ErrorResponse extends BasicResponse {
 	

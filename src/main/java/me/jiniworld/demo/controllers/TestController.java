@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "test")
+@Tag(name = "test", description = "테스트 API")
 @RequestMapping(value = "/test")
 @RequiredArgsConstructor
 @RestController

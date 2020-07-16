@@ -27,13 +27,12 @@ import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.models.responses.BasicResponse;
 import me.jiniworld.demo.models.responses.CommonResponse;
 import me.jiniworld.demo.models.responses.ErrorResponse;
+import me.jiniworld.demo.models.responses.UserResponse;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.services.UserService;
-import me.jiniworld.demo.utils.DemoApiResponses;
 
 @Tag(name = "user")
 @RequestMapping(value = "${demo.api}/users")
-@DemoApiResponses
 @RequiredArgsConstructor
 @RestController
 public class UserController {
@@ -56,7 +55,7 @@ public class UserController {
 	
 	@GetMapping("/{id}")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = CommonResponse.class))) })
+			@ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = UserResponse.class))) })
 	@Operation(summary = "회원 조회")
 	public ResponseEntity<? extends BasicResponse> select(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id) {
@@ -69,6 +68,9 @@ public class UserController {
 	}
 	
 	@PatchMapping("/{id}")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "컨텐츠 없음", content = @Content(schema = @Schema(hidden = true))),
+			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	@Operation(summary = "회원 수정")
 	public ResponseEntity<? extends BasicResponse> patch(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id, @RequestBody @Valid final UserValue value) {
@@ -80,6 +82,9 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "컨텐츠 없음", content = @Content(schema = @Schema(hidden = true))),
+			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	@Operation(summary = "회원 삭제")
 	public ResponseEntity<? extends BasicResponse> delete(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id) {

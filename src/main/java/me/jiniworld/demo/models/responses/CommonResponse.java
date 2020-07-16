@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(description = "정상 응답")
+@Schema(description = "일반 Response")
 @Getter @Setter
 public class CommonResponse<T> extends BasicResponse {
 	@Schema(description = "조회 결과 개수", defaultValue = "0")

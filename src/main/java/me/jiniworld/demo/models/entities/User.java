@@ -14,7 +14,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AccessLevel;
@@ -58,7 +57,6 @@ public class User extends BaseEntity implements Serializable {
 	private String password;
 	
 	@Singular("userRoles")
-	@JsonIgnoreProperties({"createTimestamp", "updateTimestamp", "del"})
 	@JsonManagedReference
 	@OneToMany(mappedBy="user")
 	@Where(clause = "del = false")
