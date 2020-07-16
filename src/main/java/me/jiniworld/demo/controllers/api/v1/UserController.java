@@ -42,7 +42,7 @@ public class UserController {
 	@PostMapping("")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "리소스 생성 성공", content = @Content(schema = @Schema(hidden = true))),
-			@ApiResponse(responseCode = "404", description = "내부 서버 오류", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
+			@ApiResponse(responseCode = "500", description = "내부 서버 오류", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	@Operation(summary = "회원 가입")
 	public ResponseEntity<? extends BasicResponse> save(@RequestBody @Valid final UserValue value) {
 		User user = userService.save(value);
@@ -55,7 +55,8 @@ public class UserController {
 	
 	@GetMapping("/{id}")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = UserResponse.class))) })
+			@ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = UserResponse.class))),
+			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	@Operation(summary = "회원 조회")
 	public ResponseEntity<? extends BasicResponse> select(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id) {
