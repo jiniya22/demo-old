@@ -41,7 +41,7 @@ public class UserController {
 	
 	@PostMapping("")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "리소스 생성 성공", content = @Content(schema = @Schema(hidden = true))),
+			@ApiResponse(responseCode = "201", description = "회원 리소스 생성 성공", content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "500", description = "내부 서버 오류", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	@Operation(summary = "회원 가입")
 	public ResponseEntity<? extends BasicResponse> save(@RequestBody @Valid final UserValue value) {
@@ -55,7 +55,7 @@ public class UserController {
 	
 	@GetMapping("/{id}")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = UserResponse.class))),
+			@ApiResponse(responseCode = "200", description = "회원 조회 성공", content = @Content(schema = @Schema(implementation = UserResponse.class))),
 			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	@Operation(summary = "회원 조회")
 	public ResponseEntity<? extends BasicResponse> select(
@@ -65,7 +65,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(new ErrorResponse("일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요."));
 		}
-		return ResponseEntity.ok().body(new CommonResponse<User>(oUser.get()));
+		return ResponseEntity.ok().body(new UserResponse(oUser.get()));
 	}
 	
 	@PatchMapping("/{id}")

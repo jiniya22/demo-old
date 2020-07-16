@@ -11,7 +11,7 @@ public class ErrorResponse extends BasicResponse {
 	@Schema(description = "에러 메시지", defaultValue = "")
 	private String errorMessage;
 	
-	@Schema(description = "에러코드", defaultValue = "404", allowableValues = {"404", "500"})
+	@Schema(description = "에러코드", allowableValues = {"404", "500"})
 	private String errorCode;
 	
 	public ErrorResponse(String errorMessage) {
