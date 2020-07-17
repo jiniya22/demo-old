@@ -26,3 +26,4 @@
 1. [Spring Boot REST API에 ResponseEntity 적용하기](https://blog.jiniworld.me/71)
 1. [OpenAPI 3.0를 이용한 REST API 문서 만들기 with Swagger](https://blog.jiniworld.me/83)
 1. [build 환경별 profile 적용하기](https://blog.jiniworld.me/85)
+1. [Open API 3.0 + Swagger v3 상세설정](https://blog.jiniworld.me/91)

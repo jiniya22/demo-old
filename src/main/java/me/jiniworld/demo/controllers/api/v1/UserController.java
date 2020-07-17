@@ -17,21 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.models.responses.BasicResponse;
-import me.jiniworld.demo.models.responses.CommonResponse;
 import me.jiniworld.demo.models.responses.ErrorResponse;
 import me.jiniworld.demo.models.responses.UserResponse;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.services.UserService;
 
-@Tag(name = "user")
+@Tag(name = "user", description = "사용자 API")
 @RequestMapping(value = "${demo.api}/users")
 @RequiredArgsConstructor
 @RestController
@@ -40,10 +39,10 @@ public class UserController {
 	private final UserService userService;
 	
 	@PostMapping("")
-	@ApiResponses(value = {
+	@Operation(summary = "회원 가입", 
+	responses = {
 			@ApiResponse(responseCode = "201", description = "회원 리소스 생성 성공", content = @Content(schema = @Schema(hidden = true))),
-			@ApiResponse(responseCode = "500", description = "내부 서버 오류", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
-	@Operation(summary = "회원 가입")
+			@ApiResponse(responseCode = "500", description = "내부 서버 오류", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) }	)
 	public ResponseEntity<? extends BasicResponse> save(@RequestBody @Valid final UserValue value) {
 		User user = userService.save(value);
 		if(user == null) {
@@ -54,12 +53,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/{id}")
-	@ApiResponses(value = {
+	@Operation(summary = "회원 조회", description = "id를 이용하여 user 레코드를 조회합니다.", responses = {
 			@ApiResponse(responseCode = "200", description = "회원 조회 성공", content = @Content(schema = @Schema(implementation = UserResponse.class))),
 			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
-	@Operation(summary = "회원 조회")
 	public ResponseEntity<? extends BasicResponse> select(
-			@Parameter(description = "user 의 id") @PathVariable("id") long id) {
+			@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH) @PathVariable("id") long id) {
 		Optional<User> oUser = userService.findById(id);
 		if(!oUser.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -69,10 +67,9 @@ public class UserController {
 	}
 	
 	@PatchMapping("/{id}")
-	@ApiResponses(value = {
+	@Operation(summary = "회원 수정", responses = {
 			@ApiResponse(responseCode = "204", description = "컨텐츠 없음", content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
-	@Operation(summary = "회원 수정")
 	public ResponseEntity<? extends BasicResponse> patch(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id, @RequestBody @Valid final UserValue value) {
 		if(!userService.patch(id, value)) {
@@ -83,10 +80,9 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@ApiResponses(value = {
+	@Operation(summary = "회원 삭제", responses = {
 			@ApiResponse(responseCode = "204", description = "컨텐츠 없음", content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
-	@Operation(summary = "회원 삭제")
 	public ResponseEntity<? extends BasicResponse> delete(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id) {
 		if(!userService.delete(id)) {
