@@ -19,7 +19,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<springdoc.openapi.version>1.4.1</springdoc.openapi.version>
-		<maven.test.skip>true</maven.test.skip>
 	</properties>
 	
 	<profiles>
@@ -27,6 +26,7 @@
 			<id>local</id>
 			<properties>
 				<env>local</env>
+				<maven.test.skip>true</maven.test.skip>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -36,6 +36,7 @@
 			<id>prod</id>
 			<properties>
 				<env>prod</env>
+				<maven.test.skip>false</maven.test.skip>
 			</properties>
 		</profile>
 	</profiles>
