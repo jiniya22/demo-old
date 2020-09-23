@@ -37,7 +37,8 @@ public class TestController {
 		res.put("servletPath", request.getServletPath());
 		res.put("requestURL", request.getRequestURL());
 		res.put("requestURI", request.getRequestURI());
-		res.put("requestURI", request.getRemoteAddr());	
+		res.put("remoteAddr", request.getRemoteAddr());
+		res.put("remoteHost", request.getRemoteHost());
 		res.put("X-Forwarded-For", request.getHeader("X-Forwarded-For"));
 		res.put("X-Forwarded-Host", request.getHeader("X-Forwarded-Host"));
 		res.put("X-Forwarded-Protocol", request.getHeader("X-Forwarded-Protocol"));
