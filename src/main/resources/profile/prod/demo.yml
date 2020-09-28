@@ -2,4 +2,7 @@ demo:
   api: /api/v1
   url: https://demo.jiniworld.me
   version: '@project.version@'
-    
+  token:
+    typ: JWT
+    alg: HS256
+    secretKey: GYghbwpVZ4tZtbHu4Bdh8EBhAQj8EKax

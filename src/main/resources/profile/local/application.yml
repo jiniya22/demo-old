@@ -74,3 +74,4 @@ springdoc:
   paths-to-match:
   - /api/v1/**
   - /test/**
+  - /token

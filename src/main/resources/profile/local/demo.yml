@@ -2,4 +2,7 @@ demo:
   api: /api/v1
   url: 'http://localhost:${server.port}'
   version: '@project.version@'
-    
+  token:
+    typ: JWT
+    alg: HS256
+    secretKey: GYghbwpVZ4tZtbHu4Bdh8EBhAQj8EKax
