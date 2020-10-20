@@ -4,7 +4,6 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
@@ -22,7 +21,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "me.jiniworld.demo.repositories", entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "transactionManager")
-@MapperScan(basePackages = {"me.jiniworld.demo.mapper"}, sqlSessionFactoryRef="sqlSessionFactory", sqlSessionTemplateRef="sqlSessionTemplate")
+@MapperScan(basePackages = {"me.jiniworld.demo.mapper"}, sqlSessionFactoryRef="sqlSessionFactory")
 public class DatasourceConfig {
 	
 	@Bean(name="dataSource")
@@ -69,9 +68,5 @@ public class DatasourceConfig {
 		sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*-mapper.xml"));
 		return sqlSessionFactoryBean.getObject();
 	}
-
-	@Bean(name="sqlSessionTemplate")
-	public SqlSessionTemplate sqlSessionTemplate(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
-		return new SqlSessionTemplate(sqlSessionFactory);
-	}
+	
 }
