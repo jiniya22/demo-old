@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -20,14 +20,17 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.WeakKeyException;
+import lombok.Setter;
 import me.jiniworld.demo.exception.AuthorizationHeaderNotExistsException;
 import me.jiniworld.demo.exception.TokenExpiredException;
 
+@ConfigurationProperties(prefix = "demo.token")
 @Aspect
 @Component
 public class AuthorizationAspect {
 	
-	private String secretKey;
+	@Setter private String apiKey;
+	@Setter private String secretKey;
 	
 	@Before("execution(public * me.jiniworld.demo.controllers.api.v1..*Controller.*(..)) ")
 	public void insertAdminLog(JoinPoint joinPoint) throws WeakKeyException, UnsupportedEncodingException, TokenExpiredException {
@@ -54,9 +57,5 @@ public class AuthorizationAspect {
 			}
 		}
 	}
-		
-	@Value("${demo.token.secretKey}")
-	public void setSecretKey(String secretKey) {
-		this.secretKey = secretKey;
-	}
+	
 }

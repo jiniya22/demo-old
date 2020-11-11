@@ -5,4 +5,5 @@ demo:
   token:
     typ: JWT
     alg: HS256
-    secretKey: GYghbwpVZ4tZtbHu4Bdh8EBhAQj8EKax
+    api-key: lf2McyT3V5gDu2pNNm4VxmX3C2mezX3s
+    secret-key: GYghbwpVZ4tZtbHu4Bdh8EBhAQj8EKax
