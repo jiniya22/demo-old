@@ -48,8 +48,8 @@ public class AuthorizationAspect {
             .parseClaimsJws(authorization);
 			
 			if(claims.getBody() != null) { 
-				if(claims.getBody().containsKey("exp")) {
-					long exp = Long.valueOf(claims.getBody().get("exp").toString());
+				if(claims.getBody().getExpiration() != null) {
+					long exp = claims.getBody().getExpiration().getTime();
 					if(exp < new Date().getTime()) {
 						throw new TokenExpiredException();
 					}

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.InvalidKeyException;
 import io.jsonwebtoken.security.Keys;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,20 +61,17 @@ public class TokenController {
 		}
 		
 		SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes("UTF-8"));
-		Map<String, Object> header = new HashMap<>(), payloads = new HashMap<>();
+		
+		Map<String, Object> header = new HashMap<>();
 		header.put("typ", typ);
 		header.put("alg", alg);
 		
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MINUTE, 30);		// 유효시간 30분
-		payloads.put("exp", Long.valueOf(tokenRequest.getNonce()) + 1800000L);
-		
-		payloads.put("apiKey", apiKey);
-		payloads.put("exp", cal.getTime().getTime());
-		
         String jwt = Jwts.builder()
         		.setHeader(header)
-        		.setClaims(payloads)
+        		.setIssuer("demoApp")
+        		.setIssuedAt(new Date())
+        		.setExpiration(new Date(Long.valueOf(tokenRequest.getNonce()) + 30000L)) // 1800000L
+        		.claim("apiKey", apiKey)
                 .signWith(key)  
                 .compact();
         return ResponseEntity.ok().body(new TokenResponse(jwt));
