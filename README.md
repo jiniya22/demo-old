@@ -27,3 +27,5 @@
 1. [OpenAPI 3.0를 이용한 REST API 문서 만들기 with Swagger](https://blog.jiniworld.me/83)
 1. [build 환경별 profile 적용하기](https://blog.jiniworld.me/85)
 1. [Open API 3.0 + Swagger v3 상세설정](https://blog.jiniworld.me/91)
+1. [Swagger v3에 HTTP 기본인증(Basic Authentication) 설정하기](https://blog.jiniworld.me/105)
+1. [Bearer JWT를 이용한 api 인증(Swagger v3)](https://blog.jiniworld.me/113)

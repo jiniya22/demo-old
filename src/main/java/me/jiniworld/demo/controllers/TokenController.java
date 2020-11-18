@@ -1,7 +1,6 @@
 package me.jiniworld.demo.controllers;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.InvalidKeyException;
 import io.jsonwebtoken.security.Keys;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,11 +48,10 @@ public class TokenController {
 			return ResponseEntity.badRequest().body(new ErrorResponse("apikey가 일치하지 않습니다.", "400"));
 		}
 		
+		Date now = new Date();
+		long nonce = Long.valueOf(tokenRequest.getNonce()) , expTime = 1800000L;	// 유효시간 : 30m
 		try {
-			Date nonce = new Date(Long.valueOf(tokenRequest.getNonce()));
-			Calendar c = Calendar.getInstance();
-			c.add(Calendar.MINUTE, -30);
-			if(nonce.getTime() < c.getTime().getTime() || new Date().getTime() < nonce.getTime())
+			if(nonce < now.getTime() - expTime)
 				return ResponseEntity.badRequest().body(new ErrorResponse("nonce값이 유효하지 않습니다.", "400"));
 		} catch(Exception e) {
 			return ResponseEntity.badRequest().body(new ErrorResponse("nonce값은 millisecond값으로 설정해야 합니다.", "400"));
@@ -69,8 +66,8 @@ public class TokenController {
         String jwt = Jwts.builder()
         		.setHeader(header)
         		.setIssuer("demoApp")
-        		.setIssuedAt(new Date())
-        		.setExpiration(new Date(Long.valueOf(tokenRequest.getNonce()) + 30000L)) // 1800000L
+        		.setIssuedAt(now)
+        		.setExpiration(new Date(nonce + expTime))
         		.claim("apiKey", apiKey)
                 .signWith(key)  
                 .compact();

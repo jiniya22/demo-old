@@ -2,6 +2,7 @@ package me.jiniworld.demo.configs;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.WeakKeyException;
 import lombok.Setter;
 import me.jiniworld.demo.exception.AuthorizationHeaderNotExistsException;
+import me.jiniworld.demo.exception.InvalidTokenException;
 import me.jiniworld.demo.exception.TokenExpiredException;
 
 @ConfigurationProperties(prefix = "demo.token")
@@ -41,21 +43,26 @@ public class AuthorizationAspect {
 		if(StringUtils.isBlank(authorization)){ 
 			throw new AuthorizationHeaderNotExistsException();
 		}
-		if(authorization.indexOf("Bearer") >= 0) {
+		if(Pattern.matches("^Bearer .*", authorization)) {
 			authorization = authorization.replaceAll("^Bearer( )*", "");
-			Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key)
-            .build()
-            .parseClaimsJws(authorization);
+			Jws<Claims> jwsClaims = Jwts.parserBuilder()
+					.setSigningKey(key)
+					.build()
+					.parseClaimsJws(authorization);
 			
-			if(claims.getBody() != null) { 
-				if(claims.getBody().getExpiration() != null) {
-					long exp = claims.getBody().getExpiration().getTime();
-					if(exp < new Date().getTime()) {
-						throw new TokenExpiredException();
-					}
+			if(jwsClaims.getBody() != null) {
+				Claims claims = jwsClaims.getBody();
+				if(!claims.containsKey("apiKey") || !apiKey.equals(claims.get("apiKey").toString())
+						|| claims.getExpiration() == null) {
+					throw new InvalidTokenException();
+				} 
+				long exp = claims.getExpiration().getTime();
+				if(exp < new Date().getTime()) {
+					throw new TokenExpiredException();
 				}
 			}
+		} else {
+			throw new InvalidTokenException();
 		}
-	}
-	
+	}	
 }
