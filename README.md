@@ -4,7 +4,7 @@
 ## 개발환경
 
 - Java 8
-- Spring Boot 2.1.8.RELEASE
+- Spring Boot 2.2.10.RELEASE
 - Maven
 - MySQL 8.0.17
 
