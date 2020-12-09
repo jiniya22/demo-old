@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import me.jiniworld.demo.mapper.UserMapper;
 import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.models.entities.UserRole;
 import me.jiniworld.demo.models.entities.UserRole.RoleType;
+import me.jiniworld.demo.models.simples.UserSimple;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.repositories.UserRepository;
 import me.jiniworld.demo.repositories.UserRoleRepository;
@@ -24,23 +24,14 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final UserRoleRepository userRoleRepository;
-	private final UserMapper userMapper;
 	private final PasswordEncoder passwordEncoder;
 	
-	public Optional<User> findById(Long id) {
-		return userRepository.findWithUserRolesById(id);
-	}
-	
-	public Optional<User> findByIdUsingMapper(Long id) {
-		return userMapper.findById(id);
-	}
-	
-	public Optional<User> findByIdUsingMapper2(Long id) {
-		return userMapper.findById2(id);
+	public UserSimple findById(Long id) {
+		return userRepository.findWithUserRolesById(id).orElse(null).getSimple();
 	}
 	
 	@Transactional(transactionManager="transactionManager")
-	public User save(UserValue value) {
+	private User save(UserValue value) {
 		User user = userRepository.save(User.builder()
 				.type(value.getType())
 				.email(value.getEmail())
@@ -53,14 +44,14 @@ public class UserService {
 	}
 		
 	@Transactional
-	private UserRole saveUserRole(User user) {
-		return userRoleRepository.save(UserRole.builder().user(user).roleName(RoleType.ROLE_VIEW).build());
+	private UserRole saveUserRole(User user, RoleType roleName) {
+		return userRoleRepository.save(UserRole.builder().user(user).roleName(roleName).build());
 	}
 	
-	public User join(UserValue value) {
+	public UserSimple join(UserValue value) {
 		User user = save(value);
-		saveUserRole(user);
-		return user;
+		saveUserRole(user, RoleType.ROLE_VIEW);
+		return user.getSimple();
 	}
 	
 	@Transactional
@@ -103,7 +94,9 @@ public class UserService {
 		return userRepository.findAllByDelOrderByIdDesc(false, pageable);
 	}
 
-	public Optional<User> findByEmail(String email) {
-		return userRepository.findByEmail(email);
+	public boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
 	}
+	
+	
 }

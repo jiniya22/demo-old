@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.jiniworld.demo.models.simples.StoreSimple;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
@@ -43,5 +44,11 @@ public class Store extends BaseEntity implements Serializable {
 		this.user = user;
 		this.name = name;
 		this.storeBusiness = storeBusiness;
+	}
+
+	@Override
+	public StoreSimple getSimple() {
+		return StoreSimple.builder().id(getId()).name(name).storeBusiness(storeBusiness)
+				.userId(user != null ? user.getId() : null).build();
 	}
 }

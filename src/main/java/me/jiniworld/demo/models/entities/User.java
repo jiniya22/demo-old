@@ -14,7 +14,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Singular;
+import me.jiniworld.demo.models.simples.UserSimple;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
@@ -57,7 +57,6 @@ public class User extends BaseEntity implements Serializable {
 	private String password;
 	
 	@Singular("userRoles")
-	@JsonManagedReference
 	@OneToMany(mappedBy="user")
 	@Where(clause = "del = false")
 	private Set<UserRole> userRoles;
@@ -72,5 +71,10 @@ public class User extends BaseEntity implements Serializable {
 		this.phoneNumber = phoneNumber;
 		this.password = password;
 	}
-	
+
+	@Override
+	public UserSimple getSimple() {
+		return UserSimple.builder().id(getId()).birthDate(birthDate).email(email).name(name).type(type)
+				.phoneNumber(phoneNumber).sex(sex).build();
+	}
 }

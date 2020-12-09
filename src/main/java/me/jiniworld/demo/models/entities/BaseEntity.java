@@ -15,8 +15,6 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,17 +29,14 @@ public abstract class BaseEntity implements Serializable {
 	@Column(updatable = false, nullable = false, columnDefinition = "INT(11)")
 	private Long id;
 	
-	@JsonIgnore
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date createTimestamp;
 	
-	@JsonIgnore
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = true, columnDefinition = "TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP")
 	private Date updateTimestamp;	
 
-	@JsonIgnore
 	@Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
 	private boolean del;	
 	
@@ -55,4 +50,5 @@ public abstract class BaseEntity implements Serializable {
 		updateTimestamp = Timestamp.valueOf(LocalDateTime.now());
 	}
 	
+	public abstract Object getSimple();
 }

@@ -59,7 +59,7 @@ public class LoginController {
 	public Map<String, Object> join(@RequestBody UserValue value){
 		Map<String, Object> response = new HashMap<>();
 		
-		if(userService.findByEmail(value.getEmail()).isPresent()) {
+		if(userService.existsByEmail(value.getEmail())) {
 			response.put("duplicate", true);
 			return response;
 		}

@@ -1,7 +1,5 @@
 package me.jiniworld.demo.controllers.api.v1;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -23,10 +21,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import me.jiniworld.demo.models.entities.User;
 import me.jiniworld.demo.models.responses.BasicResponse;
 import me.jiniworld.demo.models.responses.ErrorResponse;
 import me.jiniworld.demo.models.responses.UserResponse;
+import me.jiniworld.demo.models.simples.UserSimple;
 import me.jiniworld.demo.models.values.UserValue;
 import me.jiniworld.demo.services.UserService;
 
@@ -44,7 +42,7 @@ public class UserController {
 			@ApiResponse(responseCode = "201", description = "회원 리소스 생성 성공", content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "500", description = "내부 서버 오류", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) }	)
 	public ResponseEntity<? extends BasicResponse> save(@RequestBody @Valid final UserValue value) {
-		User user = userService.save(value);
+		UserSimple user = userService.join(value);
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(new ErrorResponse("회원 가입 실패", "500"));
@@ -58,12 +56,12 @@ public class UserController {
 			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	public ResponseEntity<? extends BasicResponse> select(
 			@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH) @PathVariable("id") long id) {
-		Optional<User> oUser = userService.findById(id);
-		if(!oUser.isPresent()) {
+		UserSimple value = userService.findById(id);
+		if(value == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(new ErrorResponse("일치하는 회원 정보가 없습니다. 사용자 id를 확인해주세요."));
 		}
-		return ResponseEntity.ok().body(new UserResponse(oUser.get()));
+		return ResponseEntity.ok().body(new UserResponse(value));
 	}
 	
 	@PatchMapping("/{id}")
