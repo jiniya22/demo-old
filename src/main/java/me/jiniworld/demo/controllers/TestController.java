@@ -1,5 +1,6 @@
 package me.jiniworld.demo.controllers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +48,12 @@ public class TestController {
 		res.put("HTTP_CLIENT_IP", request.getHeader("HTTP_CLIENT_IP"));
 		res.put("HTTP_X_FORWARDED_FOR", request.getHeader("HTTP_X_FORWARDED_FOR"));
 		return res;
+	}
+	
+	@Operation(summary = "현재 시각 millisecond로 반환")
+	@GetMapping(value = "/mili", produces = "text/plain")
+	public String selectStore() {
+		return String.valueOf(new Date().getTime());
 	}
 	
 }
