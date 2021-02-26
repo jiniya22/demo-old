@@ -75,8 +75,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        if (ALLOWED_METHODS.matcher(request.getMethod()).matches())
 	        	return false;
 	        
-	        final String referer = request.getHeader("Referer");
+	        final String referer = request.getHeader("Referer"), userAgent = request.getHeader("User-Agent");
 	        if (referer != null && referer.contains("/swagger-ui")) {
+	            return false;
+	        } else if(userAgent != null && userAgent.contains("HTTPie")) {
 	            return false;
 	        }
 	        return true;

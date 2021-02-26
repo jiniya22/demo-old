@@ -1,6 +1,6 @@
 demo:
   api: /api/v1
-  url: 'http://localhost:${server.port}'
+  url: 'http://127.0.0.1:${server.port}'
   version: '@project.version@'
   token:
     typ: JWT
