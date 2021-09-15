@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private final SecurityUserService securityUserService;
 	private final WebAccessDeniedHandler webAccessDeniedHandler;
+	private final static String[] allowedUrls = {"/", "/login", "/join", "/api/v1/**", "/test/**", "/token"};
 		
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -35,8 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/", "/login", "/join", "/api/v1/**", "/test/**", "/token").permitAll()
+		http
+		.authorizeRequests()
+			.antMatchers(allowedUrls).permitAll()
 			.antMatchers("/v/users").hasRole("ADMIN")
 			.antMatchers("/v", "/v/**").hasRole("VIEW")
 			.antMatchers("/swagger-ui.html", "/swagger-ui/**").hasRole("VIEW")
@@ -50,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.authenticationProvider(authenticationProvider())
 		.csrf()
+			.ignoringAntMatchers(allowedUrls)
 			.requireCsrfProtectionMatcher(new CsrfRequireMatcher())
 			.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
@@ -74,13 +77,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    public boolean matches(HttpServletRequest request) {
 	        if (ALLOWED_METHODS.matcher(request.getMethod()).matches())
 	        	return false;
-	        
-	        final String referer = request.getHeader("Referer"), userAgent = request.getHeader("User-Agent");
-	        if (referer != null && referer.contains("/swagger-ui")) {
-	            return false;
-	        } else if(userAgent != null && userAgent.contains("HTTPie")) {
-	            return false;
-	        }
 	        return true;
 	    }
 	}

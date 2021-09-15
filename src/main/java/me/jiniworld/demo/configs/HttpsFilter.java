@@ -19,9 +19,9 @@ public class HttpsFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
 		res.setHeader("Access-Control-Allow-Origin", "*");
-		res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, PATCH");
+		res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, PATCH, OPTIONS");
 		res.setHeader("Access-Control-Max-Age", "3600");
-		res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type, Accept");
+		res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type, Accept, X-XSRF-TOKEN, Authorization");
         chain.doFilter(request, response);
 	}
 
