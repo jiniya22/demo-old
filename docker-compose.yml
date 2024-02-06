@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  mysql:
+    container_name: jiniworld_test
+    image: "mysql:8.0"
+    ports:
+      - 3306:3306
+    user: mysql
+    volumes:
+      - /Users/sherry/box/mysql_data/jiniworld_test:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: jiniworld_test
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
