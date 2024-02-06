@@ -42,7 +42,6 @@ public class StoreService {
 
 	@Transactional
 	public void delete(Store store) {
-//		store.setDel(true);
 		storeRepository.delete(store);
 	}
 

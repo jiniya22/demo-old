@@ -6,7 +6,7 @@ import me.jiniworld.demo.models.entities.Store;
 
 public interface StoreMapper {
 	
-	public Optional<Store> findById(long id);
+	Optional<Store> findById(long id);
 }
 
 //@Component

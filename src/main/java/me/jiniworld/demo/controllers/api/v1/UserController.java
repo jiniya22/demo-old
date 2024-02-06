@@ -41,7 +41,7 @@ public class UserController {
 	responses = {
 			@ApiResponse(responseCode = "201", description = "회원 리소스 생성 성공", content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "500", description = "내부 서버 오류", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) }	)
-	public ResponseEntity<? extends BasicResponse> save(@RequestBody @Valid final UserValue value) {
+	public ResponseEntity<BasicResponse> save(@RequestBody @Valid final UserValue value) {
 		UserSimple user = userService.join(value);
 		if(user == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -54,7 +54,7 @@ public class UserController {
 	@Operation(summary = "회원 조회", description = "id를 이용하여 user 레코드를 조회합니다.", responses = {
 			@ApiResponse(responseCode = "200", description = "회원 조회 성공", content = @Content(schema = @Schema(implementation = UserResponse.class))),
 			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
-	public ResponseEntity<? extends BasicResponse> select(
+	public ResponseEntity<BasicResponse> select(
 			@Parameter(name = "id", description = "user 의 id", in = ParameterIn.PATH) @PathVariable("id") long id) {
 		UserSimple value = userService.findById(id);
 		if(value == null) {
@@ -68,7 +68,7 @@ public class UserController {
 	@Operation(summary = "회원 수정", responses = {
 			@ApiResponse(responseCode = "204", description = "컨텐츠 없음", content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
-	public ResponseEntity<? extends BasicResponse> patch(
+	public ResponseEntity<BasicResponse> patch(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id, @RequestBody @Valid final UserValue value) {
 		if(!userService.patch(id, value)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -81,7 +81,7 @@ public class UserController {
 	@Operation(summary = "회원 삭제", responses = {
 			@ApiResponse(responseCode = "204", description = "컨텐츠 없음", content = @Content(schema = @Schema(hidden = true))),
 			@ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
-	public ResponseEntity<? extends BasicResponse> delete(
+	public ResponseEntity<BasicResponse> delete(
 			@Parameter(description = "user 의 id") @PathVariable("id") long id) {
 		if(!userService.delete(id)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)

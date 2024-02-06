@@ -27,12 +27,11 @@ public class UserService {
 	private final PasswordEncoder passwordEncoder;
 	
 	public UserSimple findById(Long id) {
-		return userRepository.findWithUserRolesById(id).orElse(null).getSimple();
+		return userRepository.findWithUserRolesById(id).map(User::getSimple).orElse(null);
 	}
-	
-	@Transactional(transactionManager="transactionManager")
+
 	private User save(UserValue value) {
-		User user = userRepository.save(User.builder()
+		return userRepository.save(User.builder()
 				.type(value.getType())
 				.email(value.getEmail())
 				.birthDate(value.getBirthDate())
@@ -40,14 +39,13 @@ public class UserService {
 				.password(passwordEncoder.encode(value.getPassword()))
 				.phoneNumber(value.getPhoneNumber())
 				.sex(value.getSex()).build());
-		return user;
 	}
 		
-	@Transactional
 	private UserRole saveUserRole(User user, RoleType roleName) {
 		return userRoleRepository.save(UserRole.builder().user(user).roleName(roleName).build());
 	}
-	
+
+	@Transactional(transactionManager="transactionManager")
 	public UserSimple join(UserValue value) {
 		User user = save(value);
 		saveUserRole(user, RoleType.ROLE_VIEW);
@@ -57,25 +55,24 @@ public class UserService {
 	@Transactional
 	public boolean patch(long id, UserValue value) {
 		Optional<User> oUser = userRepository.findById(id);		
-		if(oUser.isPresent()) {
-			User user = oUser.get();
-			if(StringUtils.isNotBlank(value.getType()))
-				user.setType(value.getType());
-			if(StringUtils.isNotBlank(value.getEmail()))
-				user.setEmail(value.getEmail());
-			if(StringUtils.isNotBlank(value.getBirthDate()))
-				user.setBirthDate(value.getBirthDate());
-			if(StringUtils.isNotBlank(value.getName()))
-				user.setName(value.getName());
-			if(StringUtils.isNotBlank(value.getPassword()))
-				user.setPassword(passwordEncoder.encode(value.getPassword()));
-			if(StringUtils.isNotBlank(value.getPhoneNumber()))
-				user.setPhoneNumber(value.getPhoneNumber());
-			if(StringUtils.isNotBlank(value.getSex()))
-				user.setSex(value.getSex());			
-		} else {
+		if(!oUser.isPresent()) {
 			return false;
 		}
+		User user = oUser.get();
+		if(StringUtils.isNotBlank(value.getType()))
+			user.setType(value.getType());
+		if(StringUtils.isNotBlank(value.getEmail()))
+			user.setEmail(value.getEmail());
+		if(StringUtils.isNotBlank(value.getBirthDate()))
+			user.setBirthDate(value.getBirthDate());
+		if(StringUtils.isNotBlank(value.getName()))
+			user.setName(value.getName());
+		if(StringUtils.isNotBlank(value.getPassword()))
+			user.setPassword(passwordEncoder.encode(value.getPassword()));
+		if(StringUtils.isNotBlank(value.getPhoneNumber()))
+			user.setPhoneNumber(value.getPhoneNumber());
+		if(StringUtils.isNotBlank(value.getSex()))
+			user.setSex(value.getSex());
 		return true;
 	}
 

@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.RequiredArgsConstructor;
+import me.jiniworld.demo.models.values.TokenConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,17 +28,16 @@ import me.jiniworld.demo.exception.AuthorizationHeaderNotExistsException;
 import me.jiniworld.demo.exception.InvalidTokenException;
 import me.jiniworld.demo.exception.TokenExpiredException;
 
-@ConfigurationProperties(prefix = "demo.token")
+@RequiredArgsConstructor
 @Aspect
 @Component
 public class AuthorizationAspect {
 	
-	@Setter private String apiKey;
-	@Setter private String secretKey;
+	private final TokenConfig tokenConfig;
 	
 	@Before("execution(public * me.jiniworld.demo.controllers.api.v1..*Controller.*(..)) ")
 	public void insertAdminLog(JoinPoint joinPoint) throws WeakKeyException, UnsupportedEncodingException, TokenExpiredException {
-		SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes("UTF-8"));
+		SecretKey key = Keys.hmacShaKeyFor(tokenConfig.getSecretKey().getBytes("UTF-8"));
 		
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();		
 		String authorization = request.getHeader("Authorization");
@@ -52,7 +53,7 @@ public class AuthorizationAspect {
 			
 			if(jwsClaims.getBody() != null) {
 				Claims claims = jwsClaims.getBody();
-				if(!claims.containsKey("apiKey") || !apiKey.equals(claims.get("apiKey").toString())
+				if(!claims.containsKey("apiKey") || !tokenConfig.getApiKey().equals(claims.get("apiKey").toString())
 						|| claims.getExpiration() == null) {
 					throw new InvalidTokenException();
 				} 
